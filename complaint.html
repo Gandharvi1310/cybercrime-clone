@@ -7,6 +7,62 @@
 <meta name="description" content="Student demo recreation of a national cybercrime reporting portal. Not affiliated with the Government of India." />
 <link rel="stylesheet" href="css/style.css" />
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const nextButton = document.querySelector("#step-1 .next-btn");
+
+    if (!nextButton) return;
+
+    nextButton.addEventListener("click", function () {
+
+        const name = document.getElementById("full-name").value.trim();
+        const mobile = document.getElementById("mobile").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const state = document.getElementById("state").value;
+        const district = document.getElementById("district").value.trim();
+
+        // Validation
+        if (!name) {
+            alert("Please enter your full name.");
+            return;
+        }
+
+        if (!/^[0-9]{10}$/.test(mobile)) {
+            alert("Please enter a valid 10-digit mobile number.");
+            return;
+        }
+
+        if (!state) {
+            alert("Please select your state.");
+            return;
+        }
+
+        if (!district) {
+            alert("Please enter your district.");
+            return;
+        }
+
+        // Save complainant details
+        const complainantData = {
+            fullName: name,
+            mobile: mobile,
+            email: email,
+            state: state,
+            district: district
+        };
+
+        localStorage.setItem(
+            "cyberSahayakComplainant",
+            JSON.stringify(complainantData)
+        );
+
+        // Go to separate Incident Details page
+        window.location.href = "incident.html";
+    });
+
+});
+</script>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="top-bar">

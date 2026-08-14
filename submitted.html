@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Demo Complaint Submitted | Cyber Sahayak</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <style>
+
+        .success-page {
+            min-height: 70vh;
+            background: #f3f6fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .success-card {
+            background: white;
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            padding: 45px 30px;
+            border-radius: 14px;
+            border: 1px solid #dce3eb;
+            box-shadow: 0 8px 30px rgba(15,42,70,.1);
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #e8f7ed;
+            color: #218344;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .success-card h1 {
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .success-card p {
+            color: var(--muted);
+        }
+
+        .reference-box {
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .reference-label {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .reference-number {
+            font-size: 23px;
+            font-weight: 700;
+            color: var(--red);
+            letter-spacing: 1px;
+        }
+
+        .demo-note {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <header class="portal-header">
+
+        <div class="container">
+
+            <div class="brand">
+
+                <div class="emblem">
+                    EI
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="site-title">
+                        Eigi–NCRP Demo Portal
+                    </div>
+
+                    <div class="site-sub">
+                        Student Cybercrime Reporting Prototype
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="success-page">
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <span class="eyebrow">
+                DEMO COMPLETED
+            </span>
+
+            <h1>
+                Complaint Prepared Successfully
+            </h1>
+
+            <p>
+                Cyber Sahayak has successfully converted
+                your answers into a structured demo complaint.
+            </p>
+
+
+            <div class="reference-box">
+
+                <span class="reference-label">
+                    Demo Reference Number
+                </span>
+
+                <span
+                    class="reference-number"
+                    id="referenceNumber">
+                </span>
+
+            </div>
+
+
+            <div class="demo-note">
+
+                ⚠️ <strong>Important:</strong>
+                This is a student demonstration.
+                No complaint has been sent to the Government,
+                police, bank, or any external server.
+
+            </div>
+
+
+            <div>
+
+                <a
+                    href="track.html"
+                    class="btn btn-red">
+
+                    Track Demo Complaint
+
+                </a>
+
+
+                <a
+                    href="index.html"
+                    class="btn btn-outline"
+                    style="margin-left:8px;">
+
+                    Back to Home
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-bottom">
+
+                Cyber Sahayak Demo —
+                No real complaint submitted.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function generateReference() {
+
+            const random =
+                Math.floor(
+                    100000 +
+                    Math.random() * 900000
+                );
+
+            return "EIGI-DEMO-2026-" + random;
+
+        }
+
+
+        let reference =
+            localStorage.getItem(
+                "cyberSahayakReference"
+            );
+
+
+        if (!reference) {
+
+            reference =
+                generateReference();
+
+            localStorage.setItem(
+                "cyberSahayakReference",
+                reference
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "referenceNumber"
+            )
+            .textContent =
+            reference;
+
+    </script>
+
+</body>
+
+</html>

@@ -1,152 +1,405 @@
-// --- Complaint Form Multi-Step & Validation Logic ---
+// ======================================================
+// CYBER SAHAYAK - MULTI PAGE COMPLAINT FLOW
+// ======================================================
+
 document.addEventListener("DOMContentLoaded", () => {
-  const complaintForm = document.getElementById("complaint-form");
-  
-  if (complaintForm) {
-    const steps = Array.from(document.querySelectorAll(".form-step"));
-    const indicators = Array.from(document.querySelectorAll(".step-indicator"));
-    const nextBtns = document.querySelectorAll(".next-btn");
-    const prevBtns = document.querySelectorAll(".prev-btn");
-    const uploadBox = document.getElementById("upload-box");
-    const evidenceInput = document.getElementById("evidence-input");
-    const uploadList = document.getElementById("upload-list");
-    let currentStep = 0;
-    let filesArray = [];
 
-    // Function to switch between steps
-    const updateUI = () => {
-      steps.forEach((step, index) => {
-        if (index === currentStep) {
-          step.classList.remove("hidden");
-          step.classList.add("active");
-        } else {
-          step.classList.add("hidden");
-          step.classList.remove("active");
+    // --------------------------------------------------
+    // PAGE 1 - COMPLAINANT DETAILS
+    // --------------------------------------------------
+
+    const complaintForm =
+        document.getElementById("complaint-form");
+
+    const step1 =
+        document.getElementById("step-1");
+
+    // Only run this section on complaint.html
+    if (complaintForm && step1) {
+
+        const nextButton =
+            document.querySelector("#step-1 .next-btn");
+
+        if (nextButton) {
+
+            nextButton.addEventListener("click", () => {
+
+                const fullName =
+                    document.getElementById("full-name").value.trim();
+
+                const mobile =
+                    document.getElementById("mobile").value.trim();
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const state =
+                    document.getElementById("state").value;
+
+                const district =
+                    document.getElementById("district").value.trim();
+
+
+                // -----------------------------
+                // VALIDATION
+                // -----------------------------
+
+                if (!fullName) {
+
+                    alert("Please enter your full name.");
+
+                    document.getElementById("full-name").focus();
+
+                    return;
+                }
+
+
+                if (!/^[0-9]{10}$/.test(mobile)) {
+
+                    alert(
+                        "Please enter a valid 10-digit mobile number."
+                    );
+
+                    document.getElementById("mobile").focus();
+
+                    return;
+                }
+
+
+                if (
+                    email &&
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+                ) {
+
+                    alert(
+                        "Please enter a valid email address."
+                    );
+
+                    document.getElementById("email").focus();
+
+                    return;
+                }
+
+
+                if (!state) {
+
+                    alert("Please select your state.");
+
+                    document.getElementById("state").focus();
+
+                    return;
+                }
+
+
+                if (!district) {
+
+                    alert("Please enter your district.");
+
+                    document.getElementById("district").focus();
+
+                    return;
+                }
+
+
+                // -----------------------------
+                // SAVE COMPLAINANT DATA
+                // -----------------------------
+
+                const complainantData = {
+
+                    fullName: fullName,
+
+                    mobile: mobile,
+
+                    email: email,
+
+                    state: state,
+
+                    district: district
+
+                };
+
+
+                localStorage.setItem(
+                    "cyberSahayakComplainant",
+                    JSON.stringify(complainantData)
+                );
+
+
+                // -----------------------------
+                // GO TO PAGE 2
+                // -----------------------------
+
+                window.location.href =
+                    "incident.html";
+
+            });
+
         }
-      });
-      
-      indicators.forEach((indicator, index) => {
-        if (index <= currentStep) {
-          indicator.classList.add("active");
-        } else {
-          indicator.classList.remove("active");
-        }
-      });
-      
-      // Scroll to the top of the form when clicking Next/Prev
-      document.querySelector(".progress-indicator").scrollIntoView({ behavior: "smooth", block: "start" });
-    };
 
-    // Function to validate fields before allowing the user to proceed
-    const validateStep = (stepIndex) => {
-      const step = steps[stepIndex];
-      const inputs = step.querySelectorAll("input[required], select[required], textarea[required]");
-      let isValid = true;
-
-      inputs.forEach(input => {
-        const errorSpan = input.parentElement.querySelector(".error-msg") || document.getElementById(`${input.id}-error`);
-        input.classList.remove("error");
-        if (errorSpan) errorSpan.textContent = "";
-
-        if (!input.value.trim() || (input.type === 'checkbox' && !input.checked)) {
-          input.classList.add("error");
-          if (errorSpan) errorSpan.textContent = "This field is required.";
-          isValid = false;
-        } else if (input.type === "tel" && !/^\d{10}$/.test(input.value)) {
-          input.classList.add("error");
-          if (errorSpan) errorSpan.textContent = "Enter a valid 10-digit mobile number.";
-          isValid = false;
-        } else if (input.type === "email" && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-          input.classList.add("error");
-          if (errorSpan) errorSpan.textContent = "Enter a valid email address.";
-          isValid = false;
-        }
-      });
-      return isValid;
-    };
-
-    // Listen for "Next" button clicks
-    nextBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (validateStep(currentStep)) {
-          currentStep++;
-          updateUI();
-        }
-      });
-    });
-
-    // Listen for "Previous" button clicks
-    prevBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentStep--;
-        updateUI();
-      });
-    });
-
-    // Simulated Evidence Upload Logic
-    if (uploadBox && evidenceInput) {
-      uploadBox.addEventListener("click", () => evidenceInput.click());
-      
-      uploadBox.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        uploadBox.classList.add("dragover");
-      });
-      
-      uploadBox.addEventListener("dragleave", () => {
-        uploadBox.classList.remove("dragover");
-      });
-      
-      uploadBox.addEventListener("drop", (e) => {
-        e.preventDefault();
-        uploadBox.classList.remove("dragover");
-        handleFiles(e.dataTransfer.files);
-      });
-
-      evidenceInput.addEventListener("change", (e) => handleFiles(e.target.files));
-
-      function handleFiles(files) {
-        Array.from(files).forEach(file => {
-          filesArray.push(file.name);
-        });
-        renderFileList();
-      }
-
-      function renderFileList() {
-        uploadList.innerHTML = "";
-        filesArray.forEach((fileName, index) => {
-          const item = document.createElement("div");
-          item.className = "upload-item";
-          item.innerHTML = `<span>📎 ${fileName}</span> <span class="remove-file" style="color:red; cursor:pointer;" data-index="${index}">✖</span>`;
-          uploadList.appendChild(item);
-        });
-
-        document.querySelectorAll(".remove-file").forEach(btn => {
-          btn.addEventListener("click", (e) => {
-            const index = e.target.getAttribute("data-index");
-            filesArray.splice(index, 1);
-            renderFileList();
-          });
-        });
-      }
     }
 
-    // Form Submission Logic
-    complaintForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (validateStep(currentStep)) {
-        // Generate a fake reference number
-        const refNumber = `NCRP-DEMO-2026-${Math.floor(100000 + Math.random() * 900000)}`;
-        
-        // Hide the form and show the success message
-        document.getElementById("progress-indicator").classList.add("hidden");
-        complaintForm.classList.add("hidden");
-        
-        const resultBox = document.getElementById("complaint-result");
-        document.getElementById("generated-ref").textContent = refNumber;
-        resultBox.classList.remove("hidden");
-        
-        resultBox.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
+
+    // --------------------------------------------------
+    // PAGE 2 - INCIDENT DETAILS
+    // --------------------------------------------------
+
+    const incidentForm =
+        document.getElementById("incident-form");
+
+    if (incidentForm) {
+
+        const nextButton =
+            document.getElementById("incident-next");
+
+        const backButton =
+            document.getElementById("incident-back");
+
+
+        // -----------------------------
+        // LOAD PREVIOUS DATA
+        // -----------------------------
+
+        const savedIncident =
+            localStorage.getItem(
+                "cyberSahayakIncident"
+            );
+
+
+        if (savedIncident) {
+
+            try {
+
+                const data =
+                    JSON.parse(savedIncident);
+
+
+                if (data.crimeType)
+                    document.getElementById("crimeType").value =
+                        data.crimeType;
+
+                if (data.incidentDate)
+                    document.getElementById("incidentDate").value =
+                        data.incidentDate;
+
+                if (data.incidentTime)
+                    document.getElementById("incidentTime").value =
+                        data.incidentTime;
+
+                if (data.platform)
+                    document.getElementById("platform").value =
+                        data.platform;
+
+                if (data.amount)
+                    document.getElementById("amount").value =
+                        data.amount;
+
+                if (data.transactionId)
+                    document.getElementById("transactionId").value =
+                        data.transactionId;
+
+                if (data.bank)
+                    document.getElementById("bank").value =
+                        data.bank;
+
+                if (data.fraudAccount)
+                    document.getElementById("fraudAccount").value =
+                        data.fraudAccount;
+
+                if (data.suspectName)
+                    document.getElementById("suspectName").value =
+                        data.suspectName;
+
+                if (data.suspectPhone)
+                    document.getElementById("suspectPhone").value =
+                        data.suspectPhone;
+
+                if (data.suspectProfile)
+                    document.getElementById("suspectProfile").value =
+                        data.suspectProfile;
+
+                if (data.description)
+                    document.getElementById("description").value =
+                        data.description;
+
+            } catch (error) {
+
+                console.error(
+                    "Could not load incident data:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // -----------------------------
+        // BACK TO PAGE 1
+        // -----------------------------
+
+        if (backButton) {
+
+            backButton.addEventListener("click", () => {
+
+                window.location.href =
+                    "complaint.html";
+
+            });
+
+        }
+
+
+        // -----------------------------
+        // SAVE + NEXT
+        // -----------------------------
+
+        if (nextButton) {
+
+            nextButton.addEventListener("click", () => {
+
+                const crimeType =
+                    document.getElementById("crimeType").value;
+
+                const incidentDate =
+                    document.getElementById("incidentDate").value;
+
+                const description =
+                    document
+                        .getElementById("description")
+                        .value
+                        .trim();
+
+
+                // Required fields
+
+                if (!crimeType) {
+
+                    alert(
+                        "Please select the type of cybercrime."
+                    );
+
+                    return;
+                }
+
+
+                if (!incidentDate) {
+
+                    alert(
+                        "Please select the incident date."
+                    );
+
+                    return;
+                }
+
+
+                if (!description) {
+
+                    alert(
+                        "Please describe what happened."
+                    );
+
+                    return;
+                }
+
+
+                // -----------------------------
+                // SAVE INCIDENT DATA
+                // -----------------------------
+
+                const incidentData = {
+
+                    crimeType:
+                        crimeType,
+
+                    incidentDate:
+                        incidentDate,
+
+                    incidentTime:
+                        document
+                            .getElementById("incidentTime")
+                            .value,
+
+                    platform:
+                        document
+                            .getElementById("platform")
+                            .value,
+
+                    amount:
+                        document
+                            .getElementById("amount")
+                            .value,
+
+                    transactionId:
+                        document
+                            .getElementById("transactionId")
+                            .value,
+
+                    bank:
+                        document
+                            .getElementById("bank")
+                            .value,
+
+                    fraudAccount:
+                        document
+                            .getElementById("fraudAccount")
+                            .value,
+
+                    suspectName:
+                        document
+                            .getElementById("suspectName")
+                            .value,
+
+                    suspectPhone:
+                        document
+                            .getElementById("suspectPhone")
+                            .value,
+
+                    suspectProfile:
+                        document
+                            .getElementById("suspectProfile")
+                            .value,
+
+                    description:
+                        description
+
+                };
+
+
+                localStorage.setItem(
+                    "cyberSahayakIncident",
+                    JSON.stringify(incidentData)
+                );
+
+
+                // -----------------------------
+                // GO TO PAGE 3
+                // -----------------------------
+
+                window.location.href =
+                    "evidence.html";
+
+            });
+
+        }
+
+    }
+
+
+    // --------------------------------------------------
+    // PAGE 3 - EVIDENCE & SUBMIT
+    // --------------------------------------------------
+
+    const evidencePage =
+        document.getElementById("evidence-page");
+
+
+    if (evidencePage) {
+
+        console.log(
+            "Cyber Sahayak Evidence Page Loaded"
+        );
+
+    }
+
 });

@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Evidence & Submit | Cyber Sahayak</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #172033;
+        }
+
+        /* HEADER */
+        header {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e4e8ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 21px;
+            font-weight: 700;
+            color: #14213d;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #14213d;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .secure {
+            color: #168a52;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* PROGRESS */
+
+        .progress-container {
+            background: white;
+            padding: 25px 8%;
+            border-bottom: 1px solid #e5e9ef;
+        }
+
+        .progress {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9aa3b2;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #cbd2dc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .step.active {
+            color: #14213d;
+        }
+
+        .step.active .step-number {
+            background: #14213d;
+            color: white;
+            border-color: #14213d;
+        }
+
+        .step.completed .step-number {
+            background: #168a52;
+            color: white;
+            border-color: #168a52;
+        }
+
+        .line {
+            width: 100px;
+            height: 2px;
+            background: #d8dde5;
+            margin: 0 15px;
+        }
+
+        /* MAIN */
+
+        main {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #14213d;
+        }
+
+        .page-title p {
+            color: #6d7685;
+            font-size: 15px;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 22px;
+            border: 1px solid #e2e7ee;
+            box-shadow: 0 5px 20px rgba(20, 33, 61, 0.05);
+        }
+
+        .card h2 {
+            font-size: 19px;
+            color: #14213d;
+            margin-bottom: 6px;
+        }
+
+        .card-description {
+            color: #737d8c;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        /* INFO */
+
+        .info-box {
+            background: #f0f6ff;
+            border: 1px solid #d6e5fa;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .info-icon {
+            font-size: 18px;
+        }
+
+        .info-box p {
+            color: #526174;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* UPLOAD */
+
+        .upload-area {
+            border: 2px dashed #cbd3df;
+            border-radius: 12px;
+            padding: 35px 20px;
+            text-align: center;
+            background: #fafcff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #14213d;
+            background: #f5f8fc;
+        }
+
+        .upload-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .upload-area h3 {
+            font-size: 16px;
+            color: #273247;
+            margin-bottom: 7px;
+        }
+
+        .upload-area p {
+            color: #858e9c;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .choose-btn {
+            display: inline-block;
+            background: #14213d;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* FILE LIST */
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 15px;
+            border: 1px solid #e0e5ec;
+            border-radius: 9px;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .file-icon {
+            font-size: 22px;
+        }
+
+        .file-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #303a4b;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-size {
+            color: #8b94a2;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #fff1f1;
+            color: #d43636;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* SUMMARY */
+
+        .summary {
+            background: #f8fafc;
+            border: 1px solid #e2e7ee;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 16px;
+            border-bottom: 1px solid #e5e9ef;
+            font-size: 13px;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #778191;
+        }
+
+        .summary-value {
+            color: #273247;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        /* DECLARATION */
+
+        .declaration {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .declaration input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .declaration label {
+            color: #566173;
+            font-size: 13px;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        /* BUTTONS */
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            padding: 14px 25px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-back {
+            background: white;
+            color: #14213d;
+            border: 1px solid #ccd3dd;
+        }
+
+        .btn-back:hover {
+            background: #f1f4f8;
+        }
+
+        .btn-submit {
+            background: #168a52;
+            color: white;
+            min-width: 180px;
+        }
+
+        .btn-submit:hover {
+            background: #117442;
+            transform: translateY(-1px);
+        }
+
+        /* SUCCESS */
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            background: white;
+            border: 1px solid #dfe6e2;
+            border-radius: 18px;
+            padding: 50px 30px;
+            box-shadow: 0 5px 20px rgba(20, 33, 61, 0.05);
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #e6f7ef;
+            color: #168a52;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+        }
+
+        .success-screen h2 {
+            color: #14213d;
+            margin-bottom: 10px;
+        }
+
+        .success-screen p {
+            color: #697384;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 550px;
+            margin: auto;
+        }
+
+        .complaint-number {
+            margin: 25px auto;
+            padding: 15px 20px;
+            background: #f4f7fa;
+            border-radius: 9px;
+            font-weight: 700;
+            color: #14213d;
+            max-width: 350px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #8992a0;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            .secure {
+                display: none;
+            }
+
+            .progress-container {
+                padding: 20px 10px;
+            }
+
+            .line {
+                width: 35px;
+                margin: 0 7px;
+            }
+
+            .step {
+                font-size: 11px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            .page-title h1 {
+                font-size: 26px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .actions {
+                gap: 12px;
+            }
+
+            .btn {
+                width: 50%;
+            }
+
+            .summary-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .summary-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <div class="logo-icon">🛡</div>
+        Cyber Sahayak
+    </div>
+
+    <div class="secure">
+        🔒 Secure & Confidential
+    </div>
+
+</header>
+
+
+<!-- PROGRESS -->
+
+<div class="progress-container">
+
+    <div class="progress">
+
+        <div class="step completed">
+            <div class="step-number">✓</div>
+            Basic Details
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step completed">
+            <div class="step-number">✓</div>
+            Incident Details
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step active">
+            <div class="step-number">3</div>
+            Evidence & Submit
+        </div>
+
+    </div>
+
+</div>
+
+
+<main id="mainContent">
+
+    <div class="page-title">
+
+        <h1>Evidence & Submit</h1>
+
+        <p>
+            Upload supporting evidence and review your complaint before submitting.
+        </p>
+
+    </div>
+
+
+    <!-- INFO -->
+
+    <div class="info-box">
+
+        <div class="info-icon">🔒</div>
+
+        <p>
+            Upload only evidence related to your complaint. Your files should be
+            clear and readable. Supported formats include JPG, PNG, PDF and DOC.
+        </p>
+
+    </div>
+
+
+    <!-- UPLOAD -->
+
+    <div class="card">
+
+        <h2>Upload Evidence</h2>
+
+        <p class="card-description">
+            Add screenshots, transaction receipts, chats, emails or other relevant documents.
+        </p>
+
+        <div
+            class="upload-area"
+            onclick="document.getElementById('fileInput').click()"
+        >
+
+            <div class="upload-icon">📎</div>
+
+            <h3>Upload your evidence</h3>
+
+            <p>
+                Drag and drop files here or choose files from your device
+            </p>
+
+            <span class="choose-btn">
+                Choose Files
+            </span>
+
+        </div>
+
+
+        <input
+            type="file"
+            id="fileInput"
+            multiple
+            accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+            onchange="handleFiles(this.files)"
+        >
+
+
+        <div
+            class="file-list"
+            id="fileList"
+        ></div>
+
+    </div>
+
+
+    <!-- COMPLAINT SUMMARY -->
+
+    <div class="card">
+
+        <h2>Complaint Summary</h2>
+
+        <p class="card-description">
+            Please review the information before submitting your complaint.
+        </p>
+
+
+        <div class="summary" id="summary">
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Incident Type
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryCrime"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Incident Date
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryDate"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Platform
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryPlatform"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Amount Lost
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryAmount"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Transaction ID / UTR
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryTransaction"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Bank / Payment Service
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryBank"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Suspect Phone
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryPhone"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span class="summary-label">
+                    Evidence Files
+                </span>
+
+                <span
+                    class="summary-value"
+                    id="summaryFiles"
+                >
+                    0 files
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DECLARATION -->
+
+        <div class="declaration">
+
+            <input
+                type="checkbox"
+                id="declaration"
+            >
+
+            <label for="declaration">
+
+                I confirm that the information provided in this complaint is
+                true and accurate to the best of my knowledge. I understand that
+                the information and evidence may be used for processing my
+                cybercrime complaint.
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="actions">
+
+        <button
+            class="btn btn-back"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+
+        <button
+            class="btn btn-submit"
+            onclick="submitComplaint()"
+        >
+            Submit Complaint
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- SUCCESS SCREEN -->
+
+<main>
+
+    <div
+        class="success-screen"
+        id="successScreen"
+    >
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>Complaint Submitted Successfully</h2>
+
+        <p>
+            Your complaint information has been recorded successfully.
+            Please keep your complaint reference number for future tracking.
+        </p>
+
+
+        <div class="complaint-number">
+
+            Complaint Reference:
+            <span id="complaintNumber"></span>
+
+        </div>
+
+        <button
+            class="btn btn-submit"
+            onclick="window.location.href='submitted.html'"
+        >
+            Continue
+        </button>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    Cyber Sahayak • Your information is handled securely and confidentially.
+
+</footer>
+
+
+<script>
+
+    let selectedFiles = [];
+
+
+    /* LOAD INCIDENT DATA */
+
+    function loadIncidentData() {
+
+        const savedData =
+            localStorage.getItem("cyberSahayakIncident");
+
+
+        if (!savedData) {
+
+            return;
+
+        }
+
+
+        const data =
+            JSON.parse(savedData);
+
+
+        document.getElementById("summaryCrime").textContent =
+            data.crimeType || "—";
+
+
+        document.getElementById("summaryDate").textContent =
+            data.incidentDate || "—";
+
+
+        document.getElementById("summaryPlatform").textContent =
+            data.platform || "—";
+
+
+        document.getElementById("summaryAmount").textContent =
+            data.amount
+                ? "₹" + Number(data.amount).toLocaleString("en-IN")
+                : "—";
+
+
+        document.getElementById("summaryTransaction").textContent =
+            data.transactionId || "—";
+
+
+        document.getElementById("summaryBank").textContent =
+            data.bank || "—";
+
+
+        document.getElementById("summaryPhone").textContent =
+            data.suspectPhone || "—";
+
+    }
+
+
+    /* FILE UPLOAD */
+
+    function handleFiles(files) {
+
+        const newFiles =
+            Array.from(files);
+
+
+        newFiles.forEach(file => {
+
+            const exists =
+                selectedFiles.some(
+                    existingFile =>
+                        existingFile.name === file.name &&
+                        existingFile.size === file.size
+                );
+
+
+            if (!exists) {
+
+                selectedFiles.push(file);
+
+            }
+
+        });
+
+
+        updateFileList();
+
+    }
+
+
+    /* DISPLAY FILES */
+
+    function updateFileList() {
+
+        const fileList =
+            document.getElementById("fileList");
+
+
+        fileList.innerHTML = "";
+
+
+        selectedFiles.forEach((file, index) => {
+
+            const fileItem =
+                document.createElement("div");
+
+            fileItem.className =
+                "file-item";
+
+
+            fileItem.innerHTML = `
+
+                <div class="file-info">
+
+                    <div class="file-icon">
+                        📄
+                    </div>
+
+                    <div>
+
+                        <div class="file-name">
+                            ${escapeHTML(file.name)}
+                        </div>
+
+                        <div class="file-size">
+                            ${formatFileSize(file.size)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="remove-btn"
+                    onclick="removeFile(${index})"
+                >
+                    Remove
+                </button>
+
+            `;
+
+
+            fileList.appendChild(fileItem);
+
+        });
+
+
+        document.getElementById("summaryFiles").textContent =
+            selectedFiles.length +
+            (selectedFiles.length === 1 ? " file" : " files");
+
+    }
+
+
+    /* REMOVE FILE */
+
+    function removeFile(index) {
+
+        selectedFiles.splice(index, 1);
+
+        updateFileList();
+
+    }
+
+
+    /* FILE SIZE */
+
+    function formatFileSize(bytes) {
+
+        if (bytes < 1024) {
+
+            return bytes + " B";
+
+        }
+
+
+        if (bytes < 1024 * 1024) {
+
+            return (bytes / 1024).toFixed(1) + " KB";
+
+        }
+
+
+        return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+
+    }
+
+
+    /* SECURITY */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+    /* BACK */
+
+    function goBack() {
+
+        window.location.href =
+            "incident.html";
+
+    }
+
+
+    /* SUBMIT */
+
+    function submitComplaint() {
+
+        const declaration =
+            document.getElementById("declaration").checked;
+
+
+        if (!declaration) {
+
+            alert(
+                "Please confirm the declaration before submitting your complaint."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            Demo submission only.
+
+            This page does NOT submit a real complaint
+            to the National Cyber Crime Reporting Portal.
+        */
+
+
+        const complaintNumber =
+            "CS-" +
+            new Date().getFullYear() +
+            "-" +
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
+
+
+        localStorage.setItem(
+            "cyberSahayakComplaintNumber",
+            complaintNumber
+        );
+
+
+        document.getElementById("mainContent").style.display =
+            "none";
+
+
+        document.getElementById("successScreen").style.display =
+            "block";
+
+
+        document.getElementById("complaintNumber").textContent =
+            complaintNumber;
+
+    }
+
+
+    /* LOAD WHEN PAGE OPENS */
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        loadIncidentData
+    );
+
+</script>
+
+</body>
+</html>

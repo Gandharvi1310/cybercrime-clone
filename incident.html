@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incident Details | Cyber Sahayak</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f8fc;
+            color: #172033;
+        }
+
+        /* HEADER */
+        header {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e4e8ef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 21px;
+            font-weight: 700;
+            color: #14213d;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #14213d;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .secure {
+            color: #168a52;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* PROGRESS */
+        .progress-container {
+            background: white;
+            padding: 25px 8%;
+            border-bottom: 1px solid #e5e9ef;
+        }
+
+        .progress {
+            max-width: 900px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9aa3b2;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #cbd2dc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .step.active {
+            color: #14213d;
+        }
+
+        .step.active .step-number {
+            background: #14213d;
+            color: white;
+            border-color: #14213d;
+        }
+
+        .step.completed {
+            color: #168a52;
+        }
+
+        .step.completed .step-number {
+            background: #168a52;
+            color: white;
+            border-color: #168a52;
+        }
+
+        .line {
+            width: 100px;
+            height: 2px;
+            background: #d8dde5;
+            margin: 0 15px;
+        }
+
+        /* MAIN */
+        main {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #14213d;
+        }
+
+        .page-title p {
+            color: #6d7685;
+            font-size: 15px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 22px;
+            border: 1px solid #e2e7ee;
+            box-shadow: 0 5px 20px rgba(20, 33, 61, 0.05);
+        }
+
+        .card h2 {
+            font-size: 19px;
+            color: #14213d;
+            margin-bottom: 6px;
+        }
+
+        .card-description {
+            color: #737d8c;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #273247;
+        }
+
+        .required {
+            color: #d93636;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #ccd3dd;
+            border-radius: 9px;
+            font-size: 14px;
+            outline: none;
+            color: #252d3b;
+            background: white;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #14213d;
+            box-shadow: 0 0 0 3px rgba(20, 33, 61, 0.08);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .hint {
+            margin-top: 6px;
+            color: #8992a0;
+            font-size: 12px;
+        }
+
+        /* AMOUNT */
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .amount-wrapper span {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: #6e7785;
+            font-size: 14px;
+        }
+
+        .amount-wrapper input {
+            padding-left: 35px;
+        }
+
+        /* BUTTONS */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-back {
+            background: white;
+            color: #14213d;
+            border: 1px solid #ccd3dd;
+        }
+
+        .btn-back:hover {
+            background: #f1f4f8;
+        }
+
+        .btn-next {
+            background: #14213d;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #0e172b;
+            transform: translateY(-1px);
+        }
+
+        /* INFO */
+        .info-box {
+            background: #f0f6ff;
+            border: 1px solid #d6e5fa;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .info-icon {
+            font-size: 18px;
+        }
+
+        .info-box p {
+            color: #526174;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #8992a0;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 650px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            .secure {
+                display: none;
+            }
+
+            .progress-container {
+                padding: 20px 10px;
+            }
+
+            .line {
+                width: 35px;
+                margin: 0 7px;
+            }
+
+            .step {
+                font-size: 11px;
+            }
+
+            .step-number {
+                width: 28px;
+                height: 28px;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            .page-title h1 {
+                font-size: 26px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .actions {
+                gap: 12px;
+            }
+
+            .btn {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <div class="logo-icon">🛡</div>
+        Cyber Sahayak
+    </div>
+
+    <div class="secure">
+        🔒 Secure & Confidential
+    </div>
+
+</header>
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<div class="progress-container">
+
+    <div class="progress">
+
+        <div class="step completed">
+            <div class="step-number">✓</div>
+            Basic Details
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step active">
+            <div class="step-number">2</div>
+            Incident Details
+        </div>
+
+        <div class="line"></div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            Evidence & Submit
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+    <div class="page-title">
+
+        <h1>Incident Details</h1>
+
+        <p>
+            Tell us what happened. This information will help prepare your cybercrime complaint.
+        </p>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-icon">ℹ️</div>
+
+        <p>
+            Please provide accurate information about the incident.
+            If you don't know something, you can leave the optional fields blank.
+        </p>
+
+    </div>
+
+
+    <form id="incident-form">
+
+
+        <!-- =========================
+             INCIDENT INFORMATION
+        ========================== -->
+
+        <div class="card">
+
+            <h2>Incident Information</h2>
+
+            <p class="card-description">
+                When and how did the incident happen?
+            </p>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="crimeType">
+                        Type of Cybercrime
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="crimeType" required>
+
+                        <option value="">
+                            Select incident type
+                        </option>
+
+                        <option>Online Financial Fraud</option>
+                        <option>UPI Fraud</option>
+                        <option>Credit / Debit Card Fraud</option>
+                        <option>Internet Banking Fraud</option>
+                        <option>Investment / Trading Fraud</option>
+                        <option>Online Shopping Fraud</option>
+                        <option>Social Media Fraud</option>
+                        <option>Identity Theft</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="incidentDate">
+                        Incident Date
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="incidentDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="incidentTime">
+                        Incident Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="incidentTime"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="platform">
+                        Where did it happen?
+                    </label>
+
+                    <select id="platform">
+
+                        <option value="">
+                            Select platform
+                        </option>
+
+                        <option>UPI</option>
+                        <option>Banking App / Website</option>
+                        <option>WhatsApp</option>
+                        <option>Instagram</option>
+                        <option>Facebook</option>
+                        <option>Telegram</option>
+                        <option>Phone Call</option>
+                        <option>Email</option>
+                        <option>Online Shopping Website</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FINANCIAL DETAILS
+        ========================== -->
+
+        <div class="card">
+
+            <h2>Financial Details</h2>
+
+            <p class="card-description">
+                Provide details about the money involved in the incident.
+            </p>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Amount Lost
+                    </label>
+
+                    <div class="amount-wrapper">
+
+                        <span>₹</span>
+
+                        <input
+                            type="number"
+                            id="amount"
+                            placeholder="Enter amount"
+                            min="0"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="transactionId">
+                        Transaction ID / UTR
+                    </label>
+
+                    <input
+                        type="text"
+                        id="transactionId"
+                        placeholder="Enter transaction ID or UTR"
+                    >
+
+                    <div class="hint">
+                        Usually found in your bank/UPI transaction receipt.
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="bank">
+                        Bank / Payment Service
+                    </label>
+
+                    <input
+                        type="text"
+                        id="bank"
+                        placeholder="e.g. SBI, HDFC, Google Pay"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="fraudAccount">
+                        Fraudster's UPI ID / Account
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fraudAccount"
+                        placeholder="Enter UPI ID or account number"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SUSPECT DETAILS
+        ========================== -->
+
+        <div class="card">
+
+            <h2>Suspect / Fraudster Details</h2>
+
+            <p class="card-description">
+                Enter any information you have about the person or account involved.
+            </p>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="suspectName">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="suspectName"
+                        placeholder="Enter name if known"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="suspectPhone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="suspectPhone"
+                        placeholder="Enter phone number"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label for="suspectProfile">
+                        Email / Social Media Profile
+                    </label>
+
+                    <input
+                        type="text"
+                        id="suspectProfile"
+                        placeholder="Email, Instagram username, profile URL, etc."
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             DESCRIPTION
+        ========================== -->
+
+        <div class="card">
+
+            <h2>Describe What Happened</h2>
+
+            <p class="card-description">
+                Explain the incident in your own words.
+            </p>
+
+            <div class="form-group">
+
+                <label for="description">
+                    Incident Description
+                    <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="For example: I received a call from someone claiming to be a bank representative..."
+                    required
+                ></textarea>
+
+                <div class="hint">
+                    Include important details such as how you were contacted,
+                    what the person told you, and what happened afterwards.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             BUTTONS
+        ========================== -->
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="btn btn-back"
+                id="incident-back"
+            >
+                ← Back
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-next"
+                id="incident-next"
+            >
+                Save & Continue →
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<footer>
+
+    Cyber Sahayak • Your information is handled securely and confidentially.
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   INCIDENT DETAILS PAGE
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const incidentForm =
+        document.getElementById("incident-form");
+
+    const backButton =
+        document.getElementById("incident-back");
+
+    const nextButton =
+        document.getElementById("incident-next");
+
+
+    /* =================================================
+       LOAD SAVED INCIDENT DATA
+    ================================================= */
+
+    const savedIncident =
+        localStorage.getItem("cyberSahayakIncident");
+
+
+    if (savedIncident) {
+
+        try {
+
+            const data =
+                JSON.parse(savedIncident);
+
+
+            if (data.crimeType) {
+
+                document.getElementById("crimeType").value =
+                    data.crimeType;
+
+            }
+
+
+            if (data.incidentDate) {
+
+                document.getElementById("incidentDate").value =
+                    data.incidentDate;
+
+            }
+
+
+            if (data.incidentTime) {
+
+                document.getElementById("incidentTime").value =
+                    data.incidentTime;
+
+            }
+
+
+            if (data.platform) {
+
+                document.getElementById("platform").value =
+                    data.platform;
+
+            }
+
+
+            if (data.amount) {
+
+                document.getElementById("amount").value =
+                    data.amount;
+
+            }
+
+
+            if (data.transactionId) {
+
+                document.getElementById("transactionId").value =
+                    data.transactionId;
+
+            }
+
+
+            if (data.bank) {
+
+                document.getElementById("bank").value =
+                    data.bank;
+
+            }
+
+
+            if (data.fraudAccount) {
+
+                document.getElementById("fraudAccount").value =
+                    data.fraudAccount;
+
+            }
+
+
+            if (data.suspectName) {
+
+                document.getElementById("suspectName").value =
+                    data.suspectName;
+
+            }
+
+
+            if (data.suspectPhone) {
+
+                document.getElementById("suspectPhone").value =
+                    data.suspectPhone;
+
+            }
+
+
+            if (data.suspectProfile) {
+
+                document.getElementById("suspectProfile").value =
+                    data.suspectProfile;
+
+            }
+
+
+            if (data.description) {
+
+                document.getElementById("description").value =
+                    data.description;
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Unable to load saved incident information:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =================================================
+       BACK BUTTON
+    ================================================= */
+
+    backButton.addEventListener("click", function () {
+
+        window.location.href =
+            "complaint.html";
+
+    });
+
+
+    /* =================================================
+       SAVE & CONTINUE
+    ================================================= */
+
+    nextButton.addEventListener("click", function () {
+
+
+        const crimeType =
+            document.getElementById("crimeType").value;
+
+        const incidentDate =
+            document.getElementById("incidentDate").value;
+
+        const description =
+            document.getElementById("description").value.trim();
+
+
+        /* ---------------------------------------------
+           VALIDATION
+        --------------------------------------------- */
+
+        if (!crimeType) {
+
+            alert(
+                "Please select the type of cybercrime."
+            );
+
+            document
+                .getElementById("crimeType")
+                .focus();
+
+            return;
+
+        }
+
+
+        if (!incidentDate) {
+
+            alert(
+                "Please select the incident date."
+            );
+
+            document
+                .getElementById("incidentDate")
+                .focus();
+
+            return;
+
+        }
+
+
+        if (!description) {
+
+            alert(
+                "Please describe what happened."
+            );
+
+            document
+                .getElementById("description")
+                .focus();
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           CREATE INCIDENT DATA
+        --------------------------------------------- */
+
+        const incidentData = {
+
+            crimeType:
+                crimeType,
+
+            incidentDate:
+                incidentDate,
+
+            incidentTime:
+                document
+                    .getElementById("incidentTime")
+                    .value,
+
+            platform:
+                document
+                    .getElementById("platform")
+                    .value,
+
+            amount:
+                document
+                    .getElementById("amount")
+                    .value,
+
+            transactionId:
+                document
+                    .getElementById("transactionId")
+                    .value,
+
+            bank:
+                document
+                    .getElementById("bank")
+                    .value,
+
+            fraudAccount:
+                document
+                    .getElementById("fraudAccount")
+                    .value,
+
+            suspectName:
+                document
+                    .getElementById("suspectName")
+                    .value,
+
+            suspectPhone:
+                document
+                    .getElementById("suspectPhone")
+                    .value,
+
+            suspectProfile:
+                document
+                    .getElementById("suspectProfile")
+                    .value,
+
+            description:
+                description,
+
+            savedAt:
+                new Date().toISOString()
+
+        };
+
+
+        /* ---------------------------------------------
+           SAVE TO BROWSER
+        --------------------------------------------- */
+
+        localStorage.setItem(
+            "cyberSahayakIncident",
+            JSON.stringify(incidentData)
+        );
+
+
+        /* ---------------------------------------------
+           GO TO EVIDENCE PAGE
+        --------------------------------------------- */
+
+        window.location.href =
+            "evidence.html";
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

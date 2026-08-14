@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cyber Sahayak | Eigi-NCRP Demo Portal</title>
+
+    <meta name="description"
+        content="Cyber Sahayak AI-assisted cybercrime complaint preparation demo.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .sahayak-page {
+            background: #f3f6fa;
+            min-height: calc(100vh - 170px);
+            padding: 35px 0 60px;
+        }
+
+        .sahayak-container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .sahayak-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sahayak-header h1 {
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .sahayak-header p {
+            color: var(--muted);
+        }
+
+        .ai-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .ai-info,
+        .chat-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #dce3eb;
+            box-shadow: 0 5px 20px rgba(15, 42, 70, .08);
+        }
+
+        .ai-info {
+            padding: 25px;
+        }
+
+        .ai-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #0b2d50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .ai-info h2 {
+            color: var(--navy);
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .ai-status {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #e8f7ed;
+            color: #21733d;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .ai-info ul {
+            padding-left: 20px;
+            color: #475569;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .privacy-box {
+            margin-top: 20px;
+            padding: 13px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #9a3412;
+        }
+
+        .chat-card {
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 18px 22px;
+            background: #0b2d50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header strong {
+            font-size: 16px;
+        }
+
+        .demo-label {
+            font-size: 11px;
+            background: #d94b32;
+            padding: 5px 9px;
+            border-radius: 4px;
+        }
+
+        .progress-wrap {
+            padding: 14px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #fafafa;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 7px;
+        }
+
+        .progress-bar {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 10%;
+            background: #d94b32;
+            transition: width .3s;
+        }
+
+        .chat-body {
+            height: 430px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message.ai {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai .bubble {
+            background: white;
+            border: 1px solid #dce3eb;
+            color: #243447;
+        }
+
+        .user .bubble {
+            background: #0b2d50;
+            color: white;
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-row textarea {
+            flex: 1;
+            resize: none;
+            min-height: 48px;
+            max-height: 120px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: inherit;
+        }
+
+        .send-btn {
+            min-width: 90px;
+        }
+
+        .voice-btn {
+            width: 48px;
+            padding: 0;
+        }
+
+        .typing {
+            color: #64748b;
+            font-size: 12px;
+            display: none;
+        }
+
+        .field-status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        @media(max-width: 800px) {
+            .ai-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-info {
+                display: none;
+            }
+
+            .chat-body {
+                height: 420px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="container">
+            <span class="emergency">
+                🚨 Financial cyber fraud? Call <b>1930</b> immediately
+            </span>
+
+            <div class="a11y-controls">
+                <span>Text size:</span>
+                <button data-font-decrease>A-</button>
+                <button data-font-reset>A</button>
+                <button data-font-increase>A+</button>
+
+                <select class="lang-select">
+                    <option>English</option>
+                    <option>हिन्दी</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <header class="portal-header">
+        <div class="container">
+
+            <div class="brand">
+                <div class="emblem">EI</div>
+
+                <div class="brand-text">
+                    <div class="site-title">
+                        Eigi–NCRP Demo Portal
+                    </div>
+
+                    <div class="site-sub">
+                        Student Cybercrime Reporting Prototype • I4C-Style Interface
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <a href="index.html" class="btn btn-outline btn-sm">
+                    Home
+                </a>
+
+                <a href="complaint.html" class="btn btn-red btn-sm">
+                    Manual Form
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container nav-inner">
+
+            <ul class="nav-links" id="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li class="active">
+                    <a href="sahayak.html">Cyber Sahayak</a>
+                </li>
+
+                <li>
+                    <a href="track.html">Track Complaint</a>
+                </li>
+
+                <li>
+                    <a href="suspect.html">Check Suspect</a>
+                </li>
+
+                <li>
+                    <a href="safety.html">Cyber Safety</a>
+                </li>
+
+                <li>
+                    <a href="faq.html">FAQ</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <main class="sahayak-page">
+
+        <div class="container sahayak-container">
+
+            <div class="sahayak-header">
+
+                <span class="eyebrow">
+                    AI-ASSISTED COMPLAINT FILING
+                </span>
+
+                <h1>Cyber Sahayak</h1>
+
+                <p>
+                    Tell me what happened. I'll help you prepare your complaint
+                    one step at a time.
+                </p>
+
+            </div>
+
+
+            <div class="ai-layout">
+
+                <!-- LEFT INFORMATION PANEL -->
+
+                <aside class="ai-info">
+
+                    <div class="ai-avatar">
+                        EI
+                    </div>
+
+                    <h2>Cyber Sahayak</h2>
+
+                    <span class="ai-status">
+                        ● Ready to assist
+                    </span>
+
+                    <p>
+                        I will ask simple questions one at a time and convert
+                        your answers into structured complaint information.
+                    </p>
+
+                    <ul>
+                        <li>One question at a time</li>
+                        <li>No guessing</li>
+                        <li>Confirms important information</li>
+                        <li>Creates a complaint summary</li>
+                        <li>You review before submission</li>
+                    </ul>
+
+                    <div class="privacy-box">
+                        <strong>Demo Privacy Notice</strong><br><br>
+
+                        This is a student demo. Do not enter passwords,
+                        UPI PINs, CVV, OTPs or banking credentials.
+                    </div>
+
+                </aside>
+
+
+                <!-- CHAT -->
+
+                <section class="chat-card">
+
+                    <div class="chat-header">
+
+                        <strong>
+                            Cyber Sahayak Assistant
+                        </strong>
+
+                        <span class="demo-label">
+                            DEMO
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-wrap">
+
+                        <div class="progress-text">
+                            Complaint preparation:
+                            <span id="progressText">1 of 10</span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-body" id="chatBody">
+
+                    </div>
+
+
+                    <div class="chat-input-area">
+
+                        <div class="typing" id="typing">
+                            Cyber Sahayak is typing...
+                        </div>
+
+                        <div class="input-row">
+
+                            <button
+                                class="btn btn-outline voice-btn"
+                                id="voiceBtn"
+                                title="Voice input demo">
+                                🎙
+                            </button>
+
+                            <textarea
+                                id="userInput"
+                                placeholder="Type your answer here..."
+                                aria-label="Your answer"></textarea>
+
+                            <button
+                                class="btn btn-red send-btn"
+                                id="sendBtn">
+                                Send
+                            </button>
+
+                        </div>
+
+                        <div class="field-status" id="fieldStatus">
+                            Waiting for your response.
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-bottom">
+
+                Cyber Sahayak Demo —
+                Not an official Government of India website.
+                No real complaint is submitted.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/script.js"></script>
+
+    <script>
+
+        const chatBody = document.getElementById("chatBody");
+        const userInput = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        const progressText = document.getElementById("progressText");
+        const progressFill = document.getElementById("progressFill");
+
+        const typing = document.getElementById("typing");
+        const fieldStatus = document.getElementById("fieldStatus");
+
+        const questions = [
+
+            {
+                field: "story",
+                question:
+                    "I'm here to help. Please tell me in your own words what happened."
+            },
+
+            {
+                field: "name",
+                question:
+                    "Thank you. What is your full name?"
+            },
+
+            {
+                field: "mobile",
+                question:
+                    "What mobile number should be used for this complaint?"
+            },
+
+            {
+                field: "email",
+                question:
+                    "What is your email address? You can say 'I don't know' if you don't want to provide one."
+            },
+
+            {
+                field: "state",
+                question:
+                    "Which state did the incident occur in?"
+            },
+
+            {
+                field: "district",
+                question:
+                    "Which district did the incident occur in?"
+            },
+
+            {
+                field: "date",
+                question:
+                    "What was the date of the incident?"
+            },
+
+            {
+                field: "amount",
+                question:
+                    "If money was lost, approximately how much was lost? If no money was lost, say 'none'."
+            },
+
+            {
+                field: "transaction",
+                question:
+                    "Do you have a transaction ID, UTR, or similar payment reference? If you don't know, say 'I don't know'."
+            },
+
+            {
+                field: "payment",
+                question:
+                    "How did you make the payment? For example UPI, bank transfer, card, wallet, or another method."
+            }
+
+        ];
+
+
+        let currentQuestion = 0;
+
+        let complaintData = {
+            story: "",
+            name: "",
+            mobile: "",
+            email: "",
+            state: "",
+            district: "",
+            date: "",
+            amount: "",
+            transaction: "",
+            payment: ""
+        };
+
+
+        function addMessage(text, sender) {
+
+            const message = document.createElement("div");
+
+            message.className = "message " + sender;
+
+            const bubble = document.createElement("div");
+
+            bubble.className = "bubble";
+
+            bubble.textContent = text;
+
+            message.appendChild(bubble);
+
+            chatBody.appendChild(message);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+
+        function updateProgress() {
+
+            const total = questions.length;
+
+            const current = currentQuestion + 1;
+
+            progressText.textContent =
+                `${Math.min(current, total)} of ${total}`;
+
+            const percentage =
+                Math.min((current / total) * 100, 100);
+
+            progressFill.style.width =
+                percentage + "%";
+        }
+
+
+        function askQuestion() {
+
+            if (currentQuestion >= questions.length) {
+
+                finishConversation();
+
+                return;
+            }
+
+            typing.style.display = "block";
+
+            setTimeout(() => {
+
+                typing.style.display = "none";
+
+                addMessage(
+                    questions[currentQuestion].question,
+                    "ai"
+                );
+
+                fieldStatus.textContent =
+                    "Please answer the current question.";
+
+            }, 500);
+        }
+
+
+        function saveData() {
+
+            localStorage.setItem(
+                "cyberSahayakComplaint",
+                JSON.stringify(complaintData)
+            );
+
+        }
+
+
+        function processAnswer(answer) {
+
+            const field =
+                questions[currentQuestion].field;
+
+            complaintData[field] = answer;
+
+            saveData();
+
+            addMessage(answer, "user");
+
+            currentQuestion++;
+
+            updateProgress();
+
+            setTimeout(() => {
+                askQuestion();
+            }, 400);
+        }
+
+
+        function finishConversation() {
+
+            progressText.textContent =
+                "Information collected";
+
+            progressFill.style.width = "100%";
+
+            fieldStatus.textContent =
+                "Complaint information prepared for review.";
+
+            typing.style.display = "block";
+
+            setTimeout(() => {
+
+                typing.style.display = "none";
+
+                addMessage(
+                    "Thank you. I have recorded the information you provided. Please review the complaint before continuing.",
+                    "ai"
+                );
+
+                const reviewButton =
+                    document.createElement("a");
+
+                reviewButton.href = "review.html";
+
+                reviewButton.className =
+                    "btn btn-red";
+
+                reviewButton.textContent =
+                    "Review Complaint";
+
+                reviewButton.style.display =
+                    "inline-block";
+
+                reviewButton.style.marginTop =
+                    "10px";
+
+                chatBody.appendChild(reviewButton);
+
+                userInput.disabled = true;
+
+                sendBtn.disabled = true;
+
+            }, 500);
+        }
+
+
+        sendBtn.addEventListener("click", () => {
+
+            const answer =
+                userInput.value.trim();
+
+            if (!answer) {
+                return;
+            }
+
+            userInput.value = "";
+
+            processAnswer(answer);
+
+        });
+
+
+        userInput.addEventListener("keydown", (event) => {
+
+            if (event.key === "Enter" && !event.shiftKey) {
+
+                event.preventDefault();
+
+                sendBtn.click();
+
+            }
+
+        });
+
+
+        document.getElementById("voiceBtn")
+            .addEventListener("click", () => {
+
+                addMessage(
+                    "Voice input is available as a UI demo. In the production version, this button can connect to speech recognition.",
+                    "ai"
+                );
+
+            });
+
+
+        // Start conversation
+
+        updateProgress();
+
+        addMessage(
+            "Namaste. I am Cyber Sahayak. I'm sorry that you are dealing with this. I'll help you prepare your cybercrime complaint step by step.",
+            "ai"
+        );
+
+        setTimeout(() => {
+            askQuestion();
+        }, 700);
+
+    </script>
+
+</body>
+
+</html>

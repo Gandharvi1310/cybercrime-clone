@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Review Complaint | Cyber Sahayak</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <style>
+
+        .review-page {
+            background: #f3f6fa;
+            min-height: 75vh;
+            padding: 40px 0 70px;
+        }
+
+        .review-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .review-header {
+            margin-bottom: 25px;
+        }
+
+        .review-header h1 {
+            color: var(--navy);
+            margin: 6px 0;
+        }
+
+        .review-header p {
+            color: var(--muted);
+        }
+
+        .review-card {
+            background: white;
+            border: 1px solid #dce3eb;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(15,42,70,.07);
+        }
+
+        .review-card-header {
+            background: #0b2d50;
+            color: white;
+            padding: 14px 20px;
+            font-weight: 600;
+        }
+
+        .review-content {
+            padding: 20px;
+        }
+
+        .review-row {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf0f3;
+        }
+
+        .review-row:last-child {
+            border-bottom: 0;
+        }
+
+        .review-label {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .review-value {
+            color: #172033;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .missing {
+            color: #b45309;
+            font-style: italic;
+        }
+
+        .review-warning {
+            padding: 15px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .review-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        @media(max-width:600px) {
+
+            .review-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .review-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="top-bar">
+
+        <div class="container">
+
+            <span class="emergency">
+                🚨 Financial cyber fraud?
+                Call <b>1930</b> immediately
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <header class="portal-header">
+
+        <div class="container">
+
+            <div class="brand">
+
+                <div class="emblem">
+                    EI
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="site-title">
+                        Eigi–NCRP Demo Portal
+                    </div>
+
+                    <div class="site-sub">
+                        Student Cybercrime Reporting Prototype
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <nav class="navbar">
+
+        <div class="container nav-inner">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="sahayak.html">Cyber Sahayak</a>
+                </li>
+
+                <li>
+                    <a href="track.html">Track Complaint</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <main class="review-page">
+
+        <div class="container review-container">
+
+            <div class="review-header">
+
+                <span class="eyebrow">
+                    FINAL REVIEW
+                </span>
+
+                <h1>
+                    Review Your Complaint
+                </h1>
+
+                <p>
+                    Please carefully check the information before
+                    continuing.
+                </p>
+
+            </div>
+
+
+            <div class="review-warning">
+
+                ⚠️ <strong>Demo environment:</strong>
+                This information is only stored in your browser.
+                No real cybercrime complaint will be submitted.
+
+            </div>
+
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+                    Complainant Information
+                </div>
+
+                <div class="review-content">
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Full Name
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="name">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Mobile Number
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="mobile">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Email
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="email">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            State
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="state">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            District
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="district">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="review-card">
+
+                <div class="review-card-header">
+                    Incident & Financial Information
+                </div>
+
+                <div class="review-content">
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Incident Description
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="story">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Incident Date
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="date">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Amount Lost
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="amount">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Transaction ID / UTR
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="transaction">
+                        </div>
+
+                    </div>
+
+
+                    <div class="review-row">
+
+                        <div class="review-label">
+                            Payment Method
+                        </div>
+
+                        <div
+                            class="review-value"
+                            id="payment">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="review-actions">
+
+                <a
+                    href="sahayak.html"
+                    class="btn btn-outline">
+
+                    ← Go Back
+
+                </a>
+
+
+                <button
+                    class="btn btn-red"
+                    id="confirmBtn">
+
+                    Confirm & Continue →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-bottom">
+
+                Demo prototype —
+                not an official Government of India website.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        const stored =
+            localStorage.getItem(
+                "cyberSahayakComplaint"
+            );
+
+
+        if (!stored) {
+
+            window.location.href =
+                "sahayak.html";
+
+        }
+
+
+        const data =
+            JSON.parse(stored);
+
+
+        function display(id, value) {
+
+            const element =
+                document.getElementById(id);
+
+            if (!value ||
+                value.toLowerCase() === "i don't know" ||
+                value.toLowerCase() === "none") {
+
+                element.textContent =
+                    "Not provided";
+
+                element.classList.add(
+                    "missing"
+                );
+
+                return;
+
+            }
+
+            element.textContent =
+                value;
+
+        }
+
+
+        display("name", data.name);
+
+        display("mobile", data.mobile);
+
+        display("email", data.email);
+
+        display("state", data.state);
+
+        display("district", data.district);
+
+        display("story", data.story);
+
+        display("date", data.date);
+
+        display("amount", data.amount);
+
+        display("transaction", data.transaction);
+
+        display("payment", data.payment);
+
+
+        document
+            .getElementById("confirmBtn")
+            .addEventListener("click", () => {
+
+                window.location.href =
+                    "submitted.html";
+
+            });
+
+    </script>
+
+</body>
+
+</html>
