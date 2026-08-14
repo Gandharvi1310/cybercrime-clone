@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home | Eigi-NCRP Demo Portal</title>
+<meta name="description" content="Student demo recreation of a national cybercrime reporting portal. Not affiliated with the Government of India." />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="top-bar">
+  <div class="container">
+    <span class="emergency">🚨 Financial cyber fraud? Call <b>1930</b> immediately</span>
+    <div class="a11y-controls">
+      <span style="margin-right:4px;">Text size:</span>
+      <button data-font-decrease aria-label="Decrease font size">A-</button>
+      <button data-font-reset aria-label="Reset font size">A</button>
+      <button data-font-increase aria-label="Increase font size">A+</button>
+      <select class="lang-select" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+    </div>
+  </div>
+</div>
+<header class="portal-header">
+  <div class="container">
+    <div class="brand">
+      <div class="emblem">EI</div>
+      <div class="brand-text">
+        <div class="site-title">Eigi–NCRP Demo Portal</div>
+        <div class="site-sub">Student Cybercrime Reporting Prototype • I4C-Style Interface</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="track.html" class="btn btn-outline btn-sm">Track Complaint</a>
+      <a href="complaint.html" class="btn btn-red btn-sm">Report Cyber Crime</a>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <ul class="nav-links" id="nav-links">
+      <li class="active"><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <button class="nav-top" aria-haspopup="true" aria-expanded="false">Report Cyber Crime ▾</button>
+        <ul class="dropdown-menu">
+          <li><a href="complaint.html?type=women-children">Women / Children Related Crime</a></li>
+          <li><a href="complaint.html?type=financial">Financial Fraud</a></li>
+          <li><a href="complaint.html?type=other">Other Cyber Crime</a></li>
+        </ul>
+      </li>
+      <li class=""><a href="track.html">Track Complaint</a></li>
+      <li class=""><a href="suspect.html">Check Suspect</a></li>
+      <li class=""><a href="safety.html">Cyber Safety</a></li>
+      <li class=""><a href="faq.html">FAQ</a></li>
+      <li class=""><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+  </div>
+</nav>
+<main id="main-content">
+  <section class="hero">
+    <div class="container">
+      <div>
+        <span class="hero-eyebrow">⚡ AI-Assisted Complaint Filing (Demo)</span>
+        <h1>Report Cyber Crime. Get Guided Assistance.</h1>
+        <p>Eigi–NCRP Demo Portal is a student prototype that recreates the look and reporting flow of a national cybercrime portal, with mock data throughout.</p>
+        <div class="hero-actions">
+          <a href="complaint.html" class="btn btn-red">Report Cyber Crime</a>
+          <a href="track.html" class="btn btn-outline" style="background:transparent;border-color:#fff;color:#fff;">Track Complaint</a>
+        </div>
+        <div class="hero-emergency">
+          <span>🚨</span>
+          <span>Financial cyber fraud? Report immediately by calling <b>1930</b>, the national cyber fraud helpline.</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Sample Case Snapshot</h3>
+        <div class="detail-row"><span>Category</span><span>Financial Fraud</span></div>
+        <div class="detail-row"><span>Status</span><span class="status-pill status-review">Under Review</span></div>
+        <div class="detail-row"><span>State</span><span>Maharashtra</span></div>
+        <div class="hero-stat-row">
+          <div class="hero-stat"><div class="label">Reports Today</div><div class="value">1,284</div></div>
+          <div class="hero-stat"><div class="label">Avg. Response</div><div class="value">24 hrs</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="report">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Choose a Category</span>
+        <h2>What kind of cybercrime do you want to report?</h2>
+        <p>Select the option that best matches your incident. All submissions in this demo are simulated.</p>
+      </div>
+      <div class="report-grid">
+        <div class="report-card">
+          <div class="icon icon-red">👩‍👧</div>
+          <h3>Women / Children Related Crime</h3>
+          <p>Report cyber crimes involving women and children, including harassment and exploitation.</p>
+          <a href="complaint.html?type=women-children" class="btn btn-primary btn-sm">Report Crime</a>
+        </div>
+        <div class="report-card">
+          <div class="icon icon-navy">💳</div>
+          <h3>Financial Fraud</h3>
+          <p>Report online financial fraud, UPI scams, banking fraud and payment-related cybercrime.</p>
+          <a href="complaint.html?type=financial" class="btn btn-primary btn-sm">Report Financial Fraud</a>
+        </div>
+        <div class="report-card">
+          <div class="icon icon-amber">🛡️</div>
+          <h3>Other Cyber Crime</h3>
+          <p>Report hacking, social media crimes, identity theft, ransomware and other cyber offences.</p>
+          <a href="complaint.html?type=other" class="btn btn-primary btn-sm">Report Other Cyber Crime</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="services">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Quick Services</span>
+        <h2>Track a complaint or check a suspect</h2>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="icon">🔍</div>
+          <div>
+            <h3>Track Complaint</h3>
+            <p>Check the status of a previously filed demo complaint using its reference number.</p>
+            <a href="track.html" class="btn btn-outline btn-sm" style="margin-top:10px;">Track Now</a>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="icon">🕵️</div>
+          <div>
+            <h3>Check Suspect</h3>
+            <p>Look up a mobile number, email, URL, UPI ID or account number in the mock suspect database.</p>
+            <a href="suspect.html" class="btn btn-outline btn-sm" style="margin-top:10px;">Check Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="whats-new">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What's New</span>
+        <h2>Latest updates</h2>
+      </div>
+      <div class="card-grid">
+        <div class="mini-card"><span class="tag">Advisory</span><h4>New UPI verification scam pattern</h4><p>Fraudsters posing as bank staff request "UPI verification" via WhatsApp links.</p><span class="date">Aug 2026</span></div>
+        <div class="mini-card"><span class="tag">Update</span><h4>Suspect database expanded</h4><p>Demo suspect lookup now covers mobile, email, URL, UPI and account identifiers.</p><span class="date">Jul 2026</span></div>
+        <div class="mini-card"><span class="tag">Guide</span><h4>Filing evidence correctly</h4><p>Tips on capturing screenshots and chat exports that strengthen your complaint.</p><span class="date">Jul 2026</span></div>
+        <div class="mini-card"><span class="tag">Notice</span><h4>Portal demo refreshed</h4><p>This prototype has been rebuilt with a clearer step-by-step reporting flow.</p><span class="date">Jun 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="learning">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Learning Corner</span>
+        <h2>Understand cybercrime categories</h2>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="mini-card"><h4>What is phishing?</h4><p>Learn how fraudsters impersonate trusted organisations to steal your data.</p></div>
+        <div class="mini-card"><h4>Understanding UPI fraud</h4><p>How scammers exploit payment requests and QR codes to drain accounts.</p></div>
+        <div class="mini-card"><h4>Identity theft basics</h4><p>What happens when your personal details are misused online, and how to respond.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="safety-tips">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Cyber Safety Tips</span>
+        <h2>Stay a step ahead of scammers</h2>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="mini-card"><h4>🔐 Never share OTPs</h4><p>Banks and government agencies never ask for your OTP over call or chat.</p></div>
+        <div class="mini-card"><h4>🔗 Verify links before clicking</h4><p>Hover over links to check the real destination before entering any details.</p></div>
+        <div class="mini-card"><h4>📱 Use two-factor authentication</h4><p>Add an extra layer of protection to your email and banking apps.</p></div>
+      </div>
+      <div style="margin-top:18px;"><a href="safety.html" class="btn btn-outline btn-sm">View All Safety Tips</a></div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="awareness">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Cyber Awareness</span>
+        <h2>Citizen Manual &amp; Daily Digest</h2>
+      </div>
+      <div class="manual-list">
+        <div class="manual-item"><span class="icon">📘</span> Citizen's Manual — How to File a Complaint</div>
+        <div class="manual-item"><span class="icon">📗</span> Citizen's Manual — Financial Fraud Reporting</div>
+        <div class="manual-item"><span class="icon">📰</span> Daily Digest — Aug 14, 2026 (Demo Edition)</div>
+        <div class="manual-item"><span class="icon">📰</span> Daily Digest — Aug 13, 2026 (Demo Edition)</div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-emblem">
+          <div class="emblem">EI</div>
+          <strong style="color:#fff;">Eigi–NCRP Demo Portal</strong>
+        </div>
+        <p class="footer-disclaimer">This is a student demo project recreating the look and flow of a national cybercrime reporting portal. It is not affiliated with, endorsed by, or connected to the Government of India. No real complaints are filed and no personal data is transmitted.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="complaint.html">Report Cyber Crime</a></li>
+          <li><a href="track.html">Track Complaint</a></li>
+          <li><a href="suspect.html">Check Suspect</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="safety.html">Cyber Safety Tips</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Emergency</h4>
+        <p style="color:#fff;font-size:22px;font-weight:700;">1930</p>
+        <p style="font-size:12.5px;">National Cyber Fraud Helpline</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Demo prototype — not an official Government of India website. &copy; 2026 Eigi–NCRP Demo Portal.
+    </div>
+  </div>
+</footer>
+<script src="js/script.js"></script>
+</body>
+</html>
