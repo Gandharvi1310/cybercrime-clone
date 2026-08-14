@@ -85,6 +85,12 @@
             margin-bottom: 18px;
         }
 
+        .info-panel p {
+            color: #475569;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
         .info-panel ul {
             padding-left: 20px;
             color: #475569;
@@ -148,7 +154,7 @@
             height: 100%;
             width: 5%;
             background: #d94b32;
-            transition: width .3s;
+            transition: width .3s ease;
         }
 
         .chat-body {
@@ -158,34 +164,36 @@
             background: #f8fafc;
         }
 
-        .message {
+        .chat-message {
             display: flex;
             margin-bottom: 15px;
         }
 
-        .message.ai {
+        .chat-message.bot {
             justify-content: flex-start;
         }
 
-        .message.user {
+        .chat-message.user {
             justify-content: flex-end;
         }
 
-        .bubble {
+        .message-bubble {
             max-width: 78%;
             padding: 12px 15px;
             border-radius: 13px;
             font-size: 14px;
             line-height: 1.55;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
-        .ai .bubble {
+        .chat-message.bot .message-bubble {
             background: white;
             border: 1px solid #dce3eb;
             color: #243447;
         }
 
-        .user .bubble {
+        .chat-message.user .message-bubble {
             background: #0b2d50;
             color: white;
         }
@@ -246,18 +254,30 @@
             font-size: 12px;
         }
 
-        .extracted-box {
-            margin-top: 12px;
-            padding: 12px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 8px;
-            font-size: 12px;
-            color: #166534;
+        .review-panel {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            border-radius: 10px;
         }
 
-        .review-btn {
+        .review-panel h3 {
+            margin-top: 0;
+            color: #0b2d50;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 10px;
             margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .reset-btn {
+            margin-top: 10px;
+            font-size: 12px;
         }
 
         @media(max-width:800px) {
@@ -272,6 +292,27 @@
 
             .chat-body {
                 height: 430px;
+            }
+
+            .message-bubble {
+                max-width: 88%;
+            }
+        }
+
+        @media(max-width:550px) {
+
+            .input-row {
+                flex-wrap: wrap;
+            }
+
+            .input-row textarea {
+                width: 100%;
+                flex-basis: 100%;
+            }
+
+            .voice-btn,
+            .send-btn {
+                flex: 1;
             }
         }
     </style>
@@ -333,12 +374,12 @@
             <div class="header-actions">
 
                 <a href="index.html"
-                   class="btn btn-outline btn-sm">
+                    class="btn btn-outline btn-sm">
                     Home
                 </a>
 
                 <a href="complaint.html"
-                   class="btn btn-red btn-sm">
+                    class="btn btn-red btn-sm">
                     Manual Form
                 </a>
 
@@ -362,7 +403,7 @@
                 </li>
 
                 <li class="active">
-                    <a href="sahayak.html">Complaint Through Chat</a>
+                    <a href="chatbot.html">Complaint Through Chat</a>
                 </li>
 
                 <li>
@@ -417,7 +458,7 @@
                         💬
                     </div>
 
-                    <h2>Complaint Assistant</h2>
+                    <h2>Cyber Sahayak</h2>
 
                     <span class="status">
                         ● Ready to assist
@@ -425,25 +466,23 @@
 
                     <p>
                         You don't need to fill a long form.
-                        Just explain what happened and I will help
-                        organize the information.
+                        Just explain what happened and I will
+                        help organize the information.
                     </p>
-
-                    <br>
 
                     <ul>
 
                         <li>Chat naturally</li>
 
-                        <li>Speak using microphone</li>
+                        <li>Voice input</li>
 
-                        <li>Hindi / English / Hinglish / Marathi</li>
+                        <li>English / Hindi / Hinglish / Marathi</li>
 
-                        <li>Information extraction</li>
+                        <li>Automatic information extraction</li>
 
                         <li>Field validation</li>
 
-                        <li>Automatic saving</li>
+                        <li>Automatic local saving</li>
 
                         <li>Review before submission</li>
 
@@ -452,7 +491,7 @@
 
                     <div class="privacy">
 
-                        <strong>Privacy reminder</strong>
+                        <strong>🔒 Privacy reminder</strong>
 
                         <br><br>
 
@@ -461,6 +500,15 @@
 
                     </div>
 
+                    <button
+                        type="button"
+                        id="resetChat"
+                        class="btn btn-outline reset-btn">
+
+                        Start New Complaint
+
+                    </button>
+
                 </aside>
 
 
@@ -468,11 +516,10 @@
 
                 <section class="chat-card">
 
-
                     <div class="chat-header">
 
                         <strong>
-                            Complaint Assistant
+                            Cyber Sahayak
                         </strong>
 
                         <span class="live">
@@ -511,7 +558,7 @@
 
                     <div
                         class="chat-body"
-                        id="chatBody">
+                        id="chat-messages">
                     </div>
 
 
@@ -520,7 +567,34 @@
                     <div
                         class="typing"
                         id="typing">
+
                         Assistant is thinking...
+
+                    </div>
+
+
+                    <!-- REVIEW -->
+
+                    <div
+                        class="review-panel"
+                        id="reviewPanel">
+
+                        <h3>Complaint Review</h3>
+
+                        <div id="reviewContent"></div>
+
+                        <div class="review-actions">
+
+                            <button
+                                class="btn btn-red"
+                                id="continueComplaint">
+
+                                Continue to Complaint Form
+
+                            </button>
+
+                        </div>
+
                     </div>
 
 
@@ -531,8 +605,9 @@
                         <div class="input-row">
 
                             <button
+                                type="button"
                                 class="btn btn-outline voice-btn"
-                                id="voiceBtn"
+                                id="voice-btn"
                                 title="Speak">
 
                                 🎙
@@ -541,15 +616,16 @@
 
 
                             <textarea
-                                id="userInput"
-                                placeholder="Type your story here... You can use Hindi, English, Hinglish or Marathi."
+                                id="chat-input"
+                                placeholder="Type your story here... You can use English, Hindi, Hinglish or Marathi."
                                 aria-label="Your message">
                             </textarea>
 
 
                             <button
+                                type="button"
                                 class="btn btn-red send-btn"
-                                id="sendBtn">
+                                id="send-btn">
 
                                 Send
 
@@ -594,691 +670,13 @@
     </footer>
 
 
+    <!-- YOUR COMMON WEBSITE JS -->
+
     <script src="js/script.js"></script>
 
-    <script>
+    <!-- CHATBOT-SPECIFIC JS -->
 
-        /* =========================================
-           COMPLAINT STATE
-        ========================================= */
-
-        let complaintData = {
-
-            story: "",
-
-            incidentType: "",
-            platform: "",
-            incidentDate: "",
-            incidentTime: "",
-
-            amount: "",
-            transactionId: "",
-            paymentMethod: "",
-            bank: "",
-
-            suspectName: "",
-            suspectPhone: "",
-            suspectProfile: "",
-
-            name: "",
-            mobile: "",
-            email: "",
-            state: "",
-            district: "",
-
-            description: "",
-
-            evidence: []
-
-        };
-
-
-        /* =========================================
-           LOAD PREVIOUS DATA
-        ========================================= */
-
-        const saved =
-            localStorage.getItem(
-                "cyberSahayakComplaint"
-            );
-
-        if (saved) {
-
-            try {
-
-                complaintData =
-                    {
-                        ...complaintData,
-                        ...JSON.parse(saved)
-                    };
-
-            } catch (error) {
-
-                console.log(
-                    "Previous complaint data could not be loaded."
-                );
-
-            }
-
-        }
-
-
-        /* =========================================
-           ELEMENTS
-        ========================================= */
-
-        const chatBody =
-            document.getElementById("chatBody");
-
-        const userInput =
-            document.getElementById("userInput");
-
-        const sendBtn =
-            document.getElementById("sendBtn");
-
-        const voiceBtn =
-            document.getElementById("voiceBtn");
-
-        const typing =
-            document.getElementById("typing");
-
-        const statusText =
-            document.getElementById("statusText");
-
-        const progressText =
-            document.getElementById("progressText");
-
-        const progressFill =
-            document.getElementById("progressFill");
-
-
-        /* =========================================
-           MESSAGE FUNCTION
-        ========================================= */
-
-        function addMessage(text, sender) {
-
-            const message =
-                document.createElement("div");
-
-            message.className =
-                "message " + sender;
-
-            const bubble =
-                document.createElement("div");
-
-            bubble.className = "bubble";
-
-            bubble.textContent = text;
-
-            message.appendChild(bubble);
-
-            chatBody.appendChild(message);
-
-            chatBody.scrollTop =
-                chatBody.scrollHeight;
-
-        }
-
-
-        /* =========================================
-           SAVE
-        ========================================= */
-
-        function saveComplaint() {
-
-            localStorage.setItem(
-                "cyberSahayakComplaint",
-                JSON.stringify(complaintData)
-            );
-
-        }
-
-
-        /* =========================================
-           FIELD EXTRACTION
-        ========================================= */
-
-        function extractInformation(text) {
-
-            const lower =
-                text.toLowerCase();
-
-
-            /* AMOUNT */
-
-            const amountMatch =
-                text.match(
-                    /(?:₹|rs\.?|inr)?\s?(\d+(?:,\d{3})*(?:\.\d+)?)/i
-                );
-
-            if (
-                amountMatch &&
-                (
-                    lower.includes("fraud") ||
-                    lower.includes("lost") ||
-                    lower.includes("lose") ||
-                    lower.includes("payment") ||
-                    lower.includes("rupee") ||
-                    lower.includes("rs") ||
-                    text.includes("₹")
-                )
-            ) {
-
-                complaintData.amount =
-                    amountMatch[1].replace(/,/g, "");
-
-            }
-
-
-            /* UPI */
-
-            if (
-                lower.includes("upi")
-            ) {
-
-                complaintData.paymentMethod =
-                    "UPI";
-
-            }
-
-
-            /* WHATSAPP */
-
-            if (
-                lower.includes("whatsapp")
-            ) {
-
-                complaintData.platform =
-                    "WhatsApp";
-
-            }
-
-
-            /* INSTAGRAM */
-
-            if (
-                lower.includes("instagram")
-            ) {
-
-                complaintData.platform =
-                    "Instagram";
-
-            }
-
-
-            /* FACEBOOK */
-
-            if (
-                lower.includes("facebook")
-            ) {
-
-                complaintData.platform =
-                    "Facebook";
-
-            }
-
-
-            /* TELEGRAM */
-
-            if (
-                lower.includes("telegram")
-            ) {
-
-                complaintData.platform =
-                    "Telegram";
-
-            }
-
-
-            /* PHONE */
-
-            if (
-                lower.includes("phone call") ||
-                lower.includes("called me") ||
-                lower.includes("call")
-            ) {
-
-                complaintData.platform =
-                    complaintData.platform ||
-                    "Phone Call";
-
-            }
-
-
-            /* BANKING */
-
-            if (
-                lower.includes("bank transfer") ||
-                lower.includes("banking")
-            ) {
-
-                complaintData.paymentMethod =
-                    "Bank Transfer";
-
-            }
-
-
-            /* CARD */
-
-            if (
-                lower.includes("credit card") ||
-                lower.includes("debit card") ||
-                lower.includes("card")
-            ) {
-
-                complaintData.paymentMethod =
-                    "Card";
-
-            }
-
-
-            /* INCIDENT TYPE */
-
-            if (
-                lower.includes("upi fraud") ||
-                lower.includes("upi scam")
-            ) {
-
-                complaintData.incidentType =
-                    "UPI Fraud";
-
-            }
-
-            else if (
-                lower.includes("investment") ||
-                lower.includes("trading")
-            ) {
-
-                complaintData.incidentType =
-                    "Investment / Trading Fraud";
-
-            }
-
-            else if (
-                lower.includes("shopping") ||
-                lower.includes("order")
-            ) {
-
-                complaintData.incidentType =
-                    "Online Shopping Fraud";
-
-            }
-
-            else if (
-                lower.includes("instagram") ||
-                lower.includes("facebook") ||
-                lower.includes("whatsapp") ||
-                lower.includes("social media")
-            ) {
-
-                complaintData.incidentType =
-                    "Social Media Fraud";
-
-            }
-
-            else if (
-                lower.includes("otp") &&
-                (
-                    lower.includes("fraud") ||
-                    lower.includes("scam")
-                )
-            ) {
-
-                complaintData.incidentType =
-                    "Online Financial Fraud";
-
-            }
-
-            else if (
-                lower.includes("fraud") ||
-                lower.includes("scam") ||
-                lower.includes("cheated") ||
-                lower.includes("money")
-            ) {
-
-                complaintData.incidentType =
-                    "Online Financial Fraud";
-
-            }
-
-
-            /* TRANSACTION ID / UTR */
-
-            const transactionMatch =
-                text.match(
-                    /(?:utr|transaction\s*(?:id|number)?|txn\s*(?:id|number)?)\s*[:#-]?\s*([A-Za-z0-9]{6,})/i
-                );
-
-            if (transactionMatch) {
-
-                complaintData.transactionId =
-                    transactionMatch[1];
-
-            }
-
-
-            complaintData.description =
-                complaintData.description
-                ? complaintData.description + " " + text
-                : text;
-
-            complaintData.story =
-                complaintData.story
-                ? complaintData.story
-                : text;
-
-            saveComplaint();
-
-        }
-
-
-        /* =========================================
-           GET MISSING INFORMATION
-        ========================================= */
-
-        function getNextQuestion() {
-
-            if (!complaintData.incidentType) {
-
-                return "I understand. Could you tell me what type of incident this was? For example, UPI fraud, online shopping fraud, investment scam, social media fraud, or another cybercrime.";
-
-            }
-
-
-            if (!complaintData.incidentDate) {
-
-                return "When did this incident happen? You can give an exact date or an approximate date.";
-
-            }
-
-
-            if (
-                complaintData.incidentType.includes("Fraud") &&
-                !complaintData.amount
-            ) {
-
-                return "Approximately how much money was lost? If no money was lost, you can say 'no financial loss'.";
-
-            }
-
-
-            if (
-                complaintData.amount &&
-                !complaintData.paymentMethod
-            ) {
-
-                return "How was the payment made — UPI, bank transfer, card, wallet, or something else?";
-
-            }
-
-
-            if (
-                complaintData.amount &&
-                !complaintData.transactionId
-            ) {
-
-                return "Do you have the transaction ID or UTR number? If you don't have it, just say 'I don't know'.";
-
-            }
-
-
-            if (!complaintData.platform) {
-
-                return "How did the person contact you — WhatsApp, phone call, Instagram, email, a website, or another platform?";
-
-            }
-
-
-            return "Is there any other important detail about what happened that you would like to add?";
-
-        }
-
-
-        /* =========================================
-           PROGRESS
-        ========================================= */
-
-        function updateProgress() {
-
-            const fields = [
-
-                complaintData.incidentType,
-                complaintData.incidentDate,
-                complaintData.amount,
-                complaintData.paymentMethod,
-                complaintData.transactionId,
-                complaintData.platform
-
-            ];
-
-            const completed =
-                fields.filter(Boolean).length;
-
-            const percentage =
-                Math.round(
-                    (completed / fields.length) * 100
-                );
-
-            progressFill.style.width =
-                Math.max(5, percentage) + "%";
-
-            progressText.textContent =
-                percentage + "% information collected";
-
-        }
-
-
-        /* =========================================
-           PROCESS MESSAGE
-        ========================================= */
-
-        function processMessage(text) {
-
-            if (!text.trim()) {
-                return;
-            }
-
-            addMessage(text, "user");
-
-            extractInformation(text);
-
-            updateProgress();
-
-            typing.style.display = "block";
-
-            setTimeout(() => {
-
-                typing.style.display = "none";
-
-                const question =
-                    getNextQuestion();
-
-                addMessage(
-                    question,
-                    "ai"
-                );
-
-                statusText.textContent =
-                    "Information is being collected and saved.";
-
-            }, 500);
-
-        }
-
-
-        /* =========================================
-           SEND
-        ========================================= */
-
-        sendBtn.addEventListener(
-            "click",
-            () => {
-
-                const text =
-                    userInput.value.trim();
-
-                if (!text) {
-                    return;
-                }
-
-                userInput.value = "";
-
-                processMessage(text);
-
-            }
-        );
-
-
-        /* =========================================
-           ENTER TO SEND
-        ========================================= */
-
-        userInput.addEventListener(
-            "keydown",
-            (event) => {
-
-                if (
-                    event.key === "Enter" &&
-                    !event.shiftKey
-                ) {
-
-                    event.preventDefault();
-
-                    sendBtn.click();
-
-                }
-
-            }
-        );
-
-
-        /* =========================================
-           VOICE RECOGNITION
-        ========================================= */
-
-        const SpeechRecognition =
-            window.SpeechRecognition ||
-            window.webkitSpeechRecognition;
-
-        let recognition = null;
-
-        let isRecording = false;
-
-
-        if (SpeechRecognition) {
-
-            recognition =
-                new SpeechRecognition();
-
-            recognition.continuous = false;
-
-            recognition.interimResults = false;
-
-            recognition.lang = "en-IN";
-
-
-            recognition.onstart = () => {
-
-                isRecording = true;
-
-                voiceBtn.classList.add(
-                    "recording"
-                );
-
-                statusText.textContent =
-                    "Listening... Speak now.";
-
-            };
-
-
-            recognition.onresult =
-                (event) => {
-
-                    const transcript =
-                        event.results[0][0].transcript;
-
-                    userInput.value =
-                        transcript;
-
-                    statusText.textContent =
-                        "Voice captured. Press Send.";
-
-                };
-
-
-            recognition.onerror =
-                () => {
-
-                    statusText.textContent =
-                        "Voice recognition failed. You can type your message instead.";
-
-                };
-
-
-            recognition.onend = () => {
-
-                isRecording = false;
-
-                voiceBtn.classList.remove(
-                    "recording"
-                );
-
-            };
-
-
-            voiceBtn.addEventListener(
-                "click",
-                () => {
-
-                    if (isRecording) {
-
-                        recognition.stop();
-
-                    } else {
-
-                        recognition.start();
-
-                    }
-
-                }
-            );
-
-        }
-
-        else {
-
-            voiceBtn.disabled = true;
-
-            statusText.textContent =
-                "Voice recognition is not supported in this browser. Use Chrome or Edge.";
-
-        }
-
-
-        /* =========================================
-           INITIAL MESSAGE
-        ========================================= */
-
-        addMessage(
-            "Hello. I'm here to help you prepare your cybercrime complaint. You don't need to fill a long form. Just tell me what happened in your own words — you can type or speak.",
-            "ai"
-        );
-
-
-        setTimeout(() => {
-
-            addMessage(
-                "For example: \"Mere WhatsApp pe KYC ka message aaya tha aur mere account se ₹20,000 chale gaye.\"",
-                "ai"
-            );
-
-        }, 700);
-
-
-        updateProgress();
-
-    </script>
+    <script src="js/chat-assistant.js"></script>
 
 </body>
 
