@@ -1,270 +1,1138 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Report Cyber Crime | Eigi-NCRP Demo Portal</title>
-<meta name="description" content="Student demo recreation of a national cybercrime reporting portal. Not affiliated with the Government of India." />
-<link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Complaint Form | Cybercrime Reporting</title>
+
+    <meta name="description"
+        content="Cyber Sahayak complaint preparation demo form.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .complaint-page {
+            background: #f3f6fa;
+            min-height: calc(100vh - 170px);
+            padding: 35px 0 60px;
+        }
+
+        .complaint-container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--muted);
+        }
+
+        .notice {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dce3eb;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(15, 42, 70, .08);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #0b2d50;
+            color: white;
+            padding: 16px 20px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .card-body {
+            padding: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 7px;
+        }
+
+        .required {
+            color: #d94b32;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 11px 12px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0b2d50;
+            box-shadow: 0 0 0 2px rgba(11, 45, 80, .08);
+        }
+
+        .field-help {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .auto-filled {
+            background: #f0fdf4 !important;
+            border-color: #86efac !important;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: white;
+            border: 1px solid #dce3eb;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(15, 42, 70, .08);
+        }
+
+        .action-left,
+        .action-right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: #e8f7ed;
+            border: 1px solid #a7dfb9;
+            color: #166534;
+        }
+
+        .message.error {
+            display: block;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .review-box {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .review-box.active {
+            display: block;
+        }
+
+        .review-content {
+            background: #f8fafc;
+            border: 1px solid #dce3eb;
+            border-radius: 10px;
+            padding: 18px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        .demo-submit {
+            background: #168a52 !important;
+            border-color: #168a52 !important;
+        }
+
+        .reference-box {
+            display: none;
+            text-align: center;
+            padding: 25px;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .reference-box.active {
+            display: block;
+        }
+
+        .reference-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #166534;
+            margin: 10px 0;
+        }
+
+        .source-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #e0f2fe;
+            color: #075985;
+            font-size: 11px;
+        }
+
+        @media(max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .action-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
 
-    const nextButton = document.querySelector("#step-1 .next-btn");
-
-    if (!nextButton) return;
-
-    nextButton.addEventListener("click", function () {
-
-        const name = document.getElementById("full-name").value.trim();
-        const mobile = document.getElementById("mobile").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const state = document.getElementById("state").value;
-        const district = document.getElementById("district").value.trim();
-
-        // Validation
-        if (!name) {
-            alert("Please enter your full name.");
-            return;
-        }
-
-        if (!/^[0-9]{10}$/.test(mobile)) {
-            alert("Please enter a valid 10-digit mobile number.");
-            return;
-        }
-
-        if (!state) {
-            alert("Please select your state.");
-            return;
-        }
-
-        if (!district) {
-            alert("Please enter your district.");
-            return;
-        }
-
-        // Save complainant details
-        const complainantData = {
-            fullName: name,
-            mobile: mobile,
-            email: email,
-            state: state,
-            district: district
-        };
-
-        localStorage.setItem(
-            "cyberSahayakComplainant",
-            JSON.stringify(complainantData)
-        );
-
-        // Go to separate Incident Details page
-        window.location.href = "incident.html";
-    });
-
-});
-</script>
 <body>
-<a href="#main-content" class="skip-link">Skip to main content</a>
-<div class="top-bar">
-  <div class="container">
-    <span class="emergency">🚨 Financial cyber fraud? Call <b>1930</b> immediately</span>
-    <div class="a11y-controls">
-      <span style="margin-right:4px;">Text size:</span>
-      <button data-font-decrease aria-label="Decrease font size">A-</button>
-      <button data-font-reset aria-label="Reset font size">A</button>
-      <button data-font-increase aria-label="Increase font size">A+</button>
-      <select class="lang-select" aria-label="Select language">
-        <option value="en">English</option>
-        <option value="hi">हिन्दी</option>
-      </select>
-    </div>
-  </div>
-</div>
-<header class="portal-header">
-  <div class="container">
-    <div class="brand">
-      <div class="emblem">EI</div>
-      <div class="brand-text">
-        <div class="site-title">Eigi–NCRP Demo Portal</div>
-        <div class="site-sub">Student Cybercrime Reporting Prototype • I4C-Style Interface</div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <a href="track.html" class="btn btn-outline btn-sm">Track Complaint</a>
-      <a href="complaint.html" class="btn btn-red btn-sm">Report Cyber Crime</a>
-    </div>
-  </div>
-</header>
 
-<nav class="navbar">
-  <div class="container nav-inner">
-    <ul class="nav-links" id="nav-links">
-      <li class=""><a href="index.html">Home</a></li>
-      <li class="dropdown">
-        <button class="nav-top" aria-haspopup="true" aria-expanded="false">Report Cyber Crime ▾</button>
-        <ul class="dropdown-menu">
-          <li><a href="complaint.html?type=women-children">Women / Children Related Crime</a></li>
-          <li><a href="complaint.html?type=financial">Financial Fraud</a></li>
-          <li><a href="complaint.html?type=other">Other Cyber Crime</a></li>
-        </ul>
-      </li>
-      <li class=""><a href="track.html">Track Complaint</a></li>
-      <li class=""><a href="suspect.html">Check Suspect</a></li>
-      <li class=""><a href="safety.html">Cyber Safety</a></li>
-      <li class=""><a href="faq.html">FAQ</a></li>
-      <li class=""><a href="contact.html">Contact</a></li>
-    </ul>
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">☰</button>
-  </div>
-</nav>
-<main id="main-content">
-  <section class="section">
-    <div class="container" style="max-width:820px;">
-      <span class="eyebrow">Report Cyber Crime</span>
-      <h2 style="font-size:25px;color:var(--navy);margin:6px 0 22px;">Cybercrime Complaint Registration</h2>
+    <!-- TOP BAR -->
 
-      <div class="demo-warning">⚠️ Demo only — this form does not submit a real cybercrime complaint. No data is sent to any server.</div>
+    <div class="top-bar">
 
-      <!-- Progress Indicator -->
-      <div class="progress-indicator" id="progress-indicator">
-        <div class="step-indicator active" data-step="1">1. Complainant Details</div>
-        <div class="step-indicator" data-step="2">2. Incident Details</div>
-        <div class="step-indicator" data-step="3">3. Evidence & Submit</div>
-      </div>
+        <div class="container">
 
-      <form id="complaint-form" class="form-card" novalidate>
-        
-        <!-- STEP 1: Complainant Details -->
-        <div class="form-step active" id="step-1">
-          <div class="form-grid">
-            <h3 style="grid-column:1/-1;font-size:18px;color:var(--navy);margin-bottom:10px;">Complainant Information</h3>
-            <div class="field">
-              <label for="full-name">Full Name <span class="req">*</span></label>
-              <input id="full-name" type="text" placeholder="Demo Complainant" required />
-              <span class="error-msg"></span>
+            <span class="emergency">
+                🚨 Financial cyber fraud? Call <b>1930</b> immediately
+            </span>
+
+            <div class="a11y-controls">
+
+                <span>Text size:</span>
+
+                <button data-font-decrease>A-</button>
+                <button data-font-reset>A</button>
+                <button data-font-increase>A+</button>
+
             </div>
-            <div class="field">
-              <label for="mobile">Mobile Number <span class="req">*</span></label>
-              <input id="mobile" type="tel" placeholder="98XXXXXX00" maxlength="10" required pattern="[0-9]{10}" />
-              <span class="error-msg"></span>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" type="email" placeholder="you@example.com" />
-              <span class="error-msg"></span>
-            </div>
-            <div class="field">
-              <label for="state">State <span class="req">*</span></label>
-              <select id="state" required>
-                <option value="">Select state</option>
-                <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option>
-                <option>Tamil Nadu</option><option>Telangana</option><option>Uttar Pradesh</option>
-                <option>Gujarat</option><option>West Bengal</option><option>Rajasthan</option><option>Kerala</option>
-              </select>
-              <span class="error-msg"></span>
-            </div>
-            <div class="field">
-              <label for="district">District <span class="req">*</span></label>
-              <input id="district" type="text" placeholder="e.g. Pune" required />
-              <span class="error-msg"></span>
-            </div>
-          </div>
-          <div class="btn-group" style="justify-content: flex-end; margin-top: 20px;">
-            <button type="button" class="btn btn-red next-btn">Next Step ➔</button>
-          </div>
+
         </div>
 
-        <!-- STEP 2: Incident Details -->
-        <div class="form-step hidden" id="step-2">
-          <div class="form-grid">
-            <h3 style="grid-column:1/-1;font-size:18px;color:var(--navy);margin-bottom:10px;">Incident Information</h3>
-            <div class="field full">
-              <label for="crime-type">Complaint Type <span class="req">*</span></label>
-              <select id="crime-type" required>
-                <option value="">Select complaint type</option>
-                <option value="Women / Children Related Crime">Women / Children Related Crime</option>
-                <option value="Financial Fraud">Financial Fraud</option>
-                <option value="Hacking / Unauthorized Access">Hacking / Unauthorized Access</option>
-                <option value="Identity Theft">Identity Theft</option>
-                <option value="Social Media Crime">Social Media Crime</option>
-                <option value="Other Cyber Crime">Other Cyber Crime</option>
-              </select>
-              <span class="error-msg"></span>
-            </div>
-            <div class="field full">
-              <label for="incident-date">Incident Date <span class="req">*</span></label>
-              <input id="incident-date" type="date" required />
-              <span class="error-msg"></span>
-            </div>
-            <div class="field full">
-              <label for="description">Incident Description <span class="req">*</span></label>
-              <textarea id="description" rows="4" required placeholder="Describe the incident in detail..."></textarea>
-              <span class="error-msg"></span>
-            </div>
-            
-            <h3 style="grid-column:1/-1;font-size:15px;color:var(--navy);margin-top:6px;">Financial Fraud Details (if applicable)</h3>
-            <div class="field">
-              <label for="amount-lost">Amount Lost (₹)</label>
-              <input id="amount-lost" type="number" min="0" placeholder="25000" />
-            </div>
-            <div class="field">
-              <label for="payment-method">Bank / Payment Method</label>
-              <input id="payment-method" type="text" placeholder="e.g. UPI, Net Banking" />
-            </div>
-            <div class="field">
-              <label for="transaction-id">Transaction ID</label>
-              <input id="transaction-id" type="text" placeholder="e.g. TXN123456789" />
-            </div>
-            <div class="field">
-              <label for="txn-date">Transaction Date</label>
-              <input id="txn-date" type="date" />
-            </div>
-          </div>
-          <div class="btn-group" style="margin-top: 20px;">
-            <button type="button" class="btn btn-outline prev-btn">⬅ Previous</button>
-            <button type="button" class="btn btn-red next-btn">Next Step ➔</button>
-          </div>
-        </div>
-
-        <!-- STEP 3: Evidence & Submit -->
-        <div class="form-step hidden" id="step-3">
-          <div class="form-grid">
-            <h3 style="grid-column:1/-1;font-size:18px;color:var(--navy);margin-bottom:10px;">Evidence Upload</h3>
-            <div class="field full">
-              <label>Evidence Files (Optional)</label>
-              <div class="upload-box" id="upload-box" tabindex="0">
-                📎 Click or drag files here to attach evidence (screenshots, PDFs, chat exports)
-              </div>
-              <input type="file" id="evidence-input" multiple class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
-              <div class="upload-list" id="upload-list"></div>
-            </div>
-            <div class="field full">
-              <label class="checkbox-label" style="display:flex; gap:10px; align-items:flex-start;">
-                <input type="checkbox" id="declaration" required style="margin-top:4px;" />
-                <span style="font-size:14px;">I hereby declare that the information provided is true to the best of my knowledge. I understand this is a demo environment and no real data will be submitted. <span class="req">*</span></span>
-              </label>
-              <span class="error-msg" id="declaration-error"></span>
-            </div>
-          </div>
-          <div class="btn-group" style="margin-top: 20px;">
-            <button type="button" class="btn btn-outline prev-btn">⬅ Previous</button>
-            <button type="submit" class="btn btn-red">Submit Demo Complaint</button>
-          </div>
-        </div>
-      </form>
-
-      <!-- Success Screen -->
-      <div class="result-box hidden" id="complaint-result" style="text-align: center; padding: 40px 20px;">
-        <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
-        <h3 style="color: var(--navy); margin-bottom: 10px;">Demo Complaint Registered</h3>
-        <p style="margin-bottom: 20px;">Your mock complaint has been successfully simulated.</p>
-        <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed #cbd5e1;">
-          <span style="display: block; font-size: 14px; color: var(--muted); margin-bottom: 5px;">Reference Number</span>
-          <strong id="generated-ref" style="font-size: 20px; color: var(--red); letter-spacing: 1px;"></strong>
-        </div>
-        <p style="font-size: 14px; color: var(--muted); margin-bottom: 30px;">Please save this reference number to track your demo complaint status.</p>
-        <a href="track.html" class="btn btn-red">Track Complaint Status</a>
-      </div>
     </div>
-  </section>
-</main>
+
+
+    <!-- HEADER -->
+
+    <header class="portal-header">
+
+        <div class="container">
+
+            <div class="brand">
+
+                <div class="emblem">
+                    🛡
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="site-title">
+                        Cybercrime Reporting Assistant
+                    </div>
+
+                    <div class="site-sub">
+                        AI-Assisted Complaint Preparation
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="header-actions">
+
+                <a href="index.html"
+                    class="btn btn-outline btn-sm">
+                    Home
+                </a>
+
+                <a href="chatbot.html"
+                    class="btn btn-outline btn-sm">
+                    Cyber Sahayak
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="container nav-inner">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="chatbot.html">Complaint Through Chat</a>
+                </li>
+
+                <li class="active">
+                    <a href="complaint.html">Complaint Form</a>
+                </li>
+
+                <li>
+                    <a href="track.html">Track Complaint</a>
+                </li>
+
+                <li>
+                    <a href="suspect.html">Check Suspect</a>
+                </li>
+
+                <li>
+                    <a href="safety.html">Cyber Safety</a>
+                </li>
+
+                <li>
+                    <a href="faq.html">FAQ</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="complaint-page">
+
+        <div class="container complaint-container">
+
+            <div class="page-title">
+
+                <h1>Cybercrime Complaint Form</h1>
+
+                <p>
+                    Review and complete the information collected by Cyber Sahayak.
+                </p>
+
+            </div>
+
+
+            <!-- DEMO NOTICE -->
+
+            <div class="notice">
+
+                <strong>⚠ Demo Portal</strong><br>
+
+                This is a student demonstration interface.
+                No real complaint is submitted to any Government of India system.
+                Do not enter OTPs, PINs, CVVs, passwords or other authentication credentials.
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div id="formMessage"
+                class="message">
+            </div>
+
+
+            <!-- INCIDENT -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>1. Incident Details</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Crime Type
+                                <span class="required">*</span>
+                            </label>
+
+                            <select id="crimeType">
+
+                                <option value="">
+                                    Select crime type
+                                </option>
+
+                                <option value="Online Financial Fraud">
+                                    Online Financial Fraud
+                                </option>
+
+                                <option value="Investment / Trading Fraud">
+                                    Investment / Trading Fraud
+                                </option>
+
+                                <option value="Online Shopping Fraud">
+                                    Online Shopping Fraud
+                                </option>
+
+                                <option value="Phishing / Online Scam">
+                                    Phishing / Online Scam
+                                </option>
+
+                                <option value="Social Media / Account Crime">
+                                    Social Media / Account Crime
+                                </option>
+
+                                <option value="Online Harassment / Threat">
+                                    Online Harassment / Threat
+                                </option>
+
+                                <option value="Identity Theft">
+                                    Identity Theft
+                                </option>
+
+                                <option value="Malware / Ransomware">
+                                    Malware / Ransomware
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Incident Type
+                            </label>
+
+                            <input
+                                id="incidentType"
+                                type="text"
+                                placeholder="Incident type">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Incident Date
+                            </label>
+
+                            <input
+                                id="incidentDate"
+                                type="date">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Incident Time
+                            </label>
+
+                            <input
+                                id="incidentTime"
+                                type="time">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Incident Location
+                            </label>
+
+                            <input
+                                id="incidentLocation"
+                                type="text"
+                                placeholder="City / location where incident occurred">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Incident Description
+                                <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="description"
+                                placeholder="Describe what happened in detail"></textarea>
+
+                            <span class="field-help">
+                                Explain the incident in chronological order.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FINANCIAL -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>2. Financial / Transaction Details</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Financial Loss (₹)
+                            </label>
+
+                            <input
+                                id="amount"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="Amount lost">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Bank / Payment App
+                            </label>
+
+                            <input
+                                id="bank"
+                                type="text"
+                                placeholder="e.g. SBI, HDFC, Google Pay">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Transaction ID / UTR
+                            </label>
+
+                            <input
+                                id="transactionId"
+                                type="text"
+                                placeholder="Transaction ID or UTR">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Transaction Date
+                            </label>
+
+                            <input
+                                id="transactionDate"
+                                type="date">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Transaction Time
+                            </label>
+
+                            <input
+                                id="transactionTime"
+                                type="time">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Payment Method
+                            </label>
+
+                            <select id="paymentMethod">
+
+                                <option value="">
+                                    Select method
+                                </option>
+
+                                <option value="UPI">
+                                    UPI
+                                </option>
+
+                                <option value="Bank Transfer">
+                                    Bank Transfer
+                                </option>
+
+                                <option value="Card">
+                                    Card
+                                </option>
+
+                                <option value="Wallet">
+                                    Wallet
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                UPI ID
+                            </label>
+
+                            <input
+                                id="upiId"
+                                type="text"
+                                placeholder="example@upi">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Account Related Information
+                            </label>
+
+                            <input
+                                id="accountRelated"
+                                type="text"
+                                placeholder="Non-sensitive account information only">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTACT / SUSPECT -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>3. Suspect / Contact Details</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Communication Platform
+                            </label>
+
+                            <input
+                                id="platform"
+                                type="text"
+                                placeholder="WhatsApp, Phone Call, SMS, etc.">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Suspicious URL
+                            </label>
+
+                            <input
+                                id="suspiciousUrl"
+                                type="url"
+                                placeholder="https://example.com">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Suspect Name
+                            </label>
+
+                            <input
+                                id="suspectName"
+                                type="text">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Suspect Phone
+                            </label>
+
+                            <input
+                                id="suspectPhone"
+                                type="tel">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Suspect Email
+                            </label>
+
+                            <input
+                                id="suspectEmail"
+                                type="email">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Suspect Social Media Account
+                            </label>
+
+                            <input
+                                id="suspectProfile"
+                                type="text"
+                                placeholder="@username or profile URL">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- EVIDENCE -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>4. Evidence</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Evidence Available
+                            </label>
+
+                            <select id="evidenceAvailable">
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="YES">
+                                    Yes
+                                </option>
+
+                                <option value="NO">
+                                    No
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Evidence Description
+                            </label>
+
+                            <textarea
+                                id="evidenceDescription"
+                                placeholder="Describe screenshots, messages, emails, receipts, etc."></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- COMPLAINANT -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>5. Complainant Details</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="fullName"
+                                type="text"
+                                placeholder="Your full name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Mobile Number
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="mobile"
+                                type="tel"
+                                maxlength="13"
+                                placeholder="10-digit mobile number">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="you@example.com">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                State
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="state"
+                                type="text"
+                                placeholder="State">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                District
+                            </label>
+
+                            <input
+                                id="district"
+                                type="text"
+                                placeholder="District">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Address
+                            </label>
+
+                            <textarea
+                                id="address"
+                                placeholder="Your address"></textarea>
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Additional Information
+                            </label>
+
+                            <textarea
+                                id="additionalInformation"
+                                placeholder="Any other relevant information"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTIONS -->
+
+            <div class="action-bar">
+
+                <div class="action-left">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        id="backToChat">
+
+                        ← Back to Cyber Sahayak
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        id="clearForm">
+
+                        Clear Form
+
+                    </button>
+
+                </div>
+
+
+                <div class="action-right">
+
+                    <button
+                        type="button"
+                        class="btn btn-red"
+                        id="reviewComplaint">
+
+                        Review Complaint
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- REVIEW -->
+
+            <section
+                class="card review-box"
+                id="reviewBox">
+
+                <div class="card-header">
+
+                    <h2>6. Final Review</h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div
+                        id="reviewContent"
+                        class="review-content">
+                    </div>
+
+
+                    <div class="action-bar"
+                        style="margin-top:15px;box-shadow:none;padding:0;border:0;">
+
+                        <div></div>
+
+                        <div class="action-right">
+
+                            <button
+                                type="button"
+                                class="btn btn-outline"
+                                id="editComplaint">
+
+                                ← Edit
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-red demo-submit"
+                                id="submitComplaint">
+
+                                Submit Demo Complaint
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REFERENCE -->
+
+            <div
+                id="referenceBox"
+                class="reference-box">
+
+                <h2>✓ Demo Complaint Prepared</h2>
+
+                <p>
+                    Your complaint information has been successfully
+                    prepared for this demonstration.
+                </p>
+
+                <div
+                    id="referenceNumber"
+                    class="reference-number">
+                </div>
+
+                <p>
+                    No real complaint was submitted to any government system.
+                </p>
+
+                <span class="source-badge">
+                    Cyber Sahayak Demo
+                </span>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-bottom">
+
+                Complaint Form Demo —
+                Not an official Government of India website.
+                No real complaint is submitted.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- COMMON JS -->
+
+    <script src="js/script.js"></script>
+
+    <!-- COMPLAINT PAGE JS -->
+
+    <script src="js/complaint.js"></script>
+
+</body>
+
+</html>

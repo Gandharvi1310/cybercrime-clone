@@ -386,3 +386,47 @@ body.font-xl { font-size: 19px; }
 .form-step.hidden {
   display: none;
 }
+.review-panel {
+    display: none;
+    margin: 15px;
+    padding: 18px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 10px;
+}
+
+.review-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #eef2f7;
+    font-size: 13px;
+}
+
+.review-item strong {
+    color: #0b2d50;
+}
+
+.review-item span,
+.review-item p {
+    margin: 0;
+    color: #475569;
+    word-break: break-word;
+}
+
+.review-item.description {
+    display: block;
+}
+
+.review-item.description strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+@media(max-width:550px) {
+    .review-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
