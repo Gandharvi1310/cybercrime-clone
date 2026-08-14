@@ -1,12 +1,12 @@
 // ======================================================
-// CYBER SAHAYAK - MULTI PAGE COMPLAINT FLOW
+// CYBER CHATBOT - MULTI PAGE COMPLAINT FLOW
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --------------------------------------------------
+    // ==================================================
     // PAGE 1 - COMPLAINANT DETAILS
-    // --------------------------------------------------
+    // ==================================================
 
     const complaintForm =
         document.getElementById("complaint-form");
@@ -14,30 +14,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const step1 =
         document.getElementById("step-1");
 
+
     // Only run this section on complaint.html
     if (complaintForm && step1) {
 
         const nextButton =
             document.querySelector("#step-1 .next-btn");
 
+
         if (nextButton) {
 
             nextButton.addEventListener("click", () => {
 
+                // -----------------------------
+                // GET FORM VALUES
+                // -----------------------------
+
                 const fullName =
-                    document.getElementById("full-name").value.trim();
+                    document
+                        .getElementById("full-name")
+                        .value
+                        .trim();
 
                 const mobile =
-                    document.getElementById("mobile").value.trim();
+                    document
+                        .getElementById("mobile")
+                        .value
+                        .trim();
 
                 const email =
-                    document.getElementById("email").value.trim();
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
 
                 const state =
-                    document.getElementById("state").value;
+                    document
+                        .getElementById("state")
+                        .value;
 
                 const district =
-                    document.getElementById("district").value.trim();
+                    document
+                        .getElementById("district")
+                        .value
+                        .trim();
 
 
                 // -----------------------------
@@ -46,9 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!fullName) {
 
-                    alert("Please enter your full name.");
+                    alert(
+                        "Please enter your full name."
+                    );
 
-                    document.getElementById("full-name").focus();
+                    document
+                        .getElementById("full-name")
+                        .focus();
 
                     return;
                 }
@@ -60,7 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a valid 10-digit mobile number."
                     );
 
-                    document.getElementById("mobile").focus();
+                    document
+                        .getElementById("mobile")
+                        .focus();
 
                     return;
                 }
@@ -75,7 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a valid email address."
                     );
 
-                    document.getElementById("email").focus();
+                    document
+                        .getElementById("email")
+                        .focus();
 
                     return;
                 }
@@ -83,9 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!state) {
 
-                    alert("Please select your state.");
+                    alert(
+                        "Please select your state."
+                    );
 
-                    document.getElementById("state").focus();
+                    document
+                        .getElementById("state")
+                        .focus();
 
                     return;
                 }
@@ -93,9 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!district) {
 
-                    alert("Please enter your district.");
+                    alert(
+                        "Please enter your district."
+                    );
 
-                    document.getElementById("district").focus();
+                    document
+                        .getElementById("district")
+                        .focus();
 
                     return;
                 }
@@ -121,8 +157,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 localStorage.setItem(
-                    "cyberSahayakComplainant",
+                    "cyberChatbotComplainant",
                     JSON.stringify(complainantData)
+                );
+
+
+                console.log(
+                    "Complainant data saved:",
+                    complainantData
                 );
 
 
@@ -140,12 +182,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // --------------------------------------------------
+    // ==================================================
     // PAGE 2 - INCIDENT DETAILS
-    // --------------------------------------------------
+    // ==================================================
 
     const incidentForm =
         document.getElementById("incident-form");
+
 
     if (incidentForm) {
 
@@ -157,12 +200,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         // -----------------------------
-        // LOAD PREVIOUS DATA
+        // LOAD PREVIOUS INCIDENT DATA
         // -----------------------------
 
         const savedIncident =
             localStorage.getItem(
-                "cyberSahayakIncident"
+                "cyberChatbotIncident"
             );
 
 
@@ -174,53 +217,197 @@ document.addEventListener("DOMContentLoaded", () => {
                     JSON.parse(savedIncident);
 
 
-                if (data.crimeType)
-                    document.getElementById("crimeType").value =
+                // Crime type
+
+                const crimeTypeElement =
+                    document.getElementById("crimeType");
+
+                if (
+                    crimeTypeElement &&
+                    data.crimeType
+                ) {
+
+                    crimeTypeElement.value =
                         data.crimeType;
 
-                if (data.incidentDate)
-                    document.getElementById("incidentDate").value =
+                }
+
+
+                // Incident date
+
+                const incidentDateElement =
+                    document.getElementById("incidentDate");
+
+                if (
+                    incidentDateElement &&
+                    data.incidentDate
+                ) {
+
+                    incidentDateElement.value =
                         data.incidentDate;
 
-                if (data.incidentTime)
-                    document.getElementById("incidentTime").value =
+                }
+
+
+                // Incident time
+
+                const incidentTimeElement =
+                    document.getElementById("incidentTime");
+
+                if (
+                    incidentTimeElement &&
+                    data.incidentTime
+                ) {
+
+                    incidentTimeElement.value =
                         data.incidentTime;
 
-                if (data.platform)
-                    document.getElementById("platform").value =
+                }
+
+
+                // Platform
+
+                const platformElement =
+                    document.getElementById("platform");
+
+                if (
+                    platformElement &&
+                    data.platform
+                ) {
+
+                    platformElement.value =
                         data.platform;
 
-                if (data.amount)
-                    document.getElementById("amount").value =
+                }
+
+
+                // Amount
+
+                const amountElement =
+                    document.getElementById("amount");
+
+                if (
+                    amountElement &&
+                    data.amount
+                ) {
+
+                    amountElement.value =
                         data.amount;
 
-                if (data.transactionId)
-                    document.getElementById("transactionId").value =
+                }
+
+
+                // Transaction ID
+
+                const transactionIdElement =
+                    document.getElementById("transactionId");
+
+                if (
+                    transactionIdElement &&
+                    data.transactionId
+                ) {
+
+                    transactionIdElement.value =
                         data.transactionId;
 
-                if (data.bank)
-                    document.getElementById("bank").value =
+                }
+
+
+                // Bank
+
+                const bankElement =
+                    document.getElementById("bank");
+
+                if (
+                    bankElement &&
+                    data.bank
+                ) {
+
+                    bankElement.value =
                         data.bank;
 
-                if (data.fraudAccount)
-                    document.getElementById("fraudAccount").value =
+                }
+
+
+                // Fraud account
+
+                const fraudAccountElement =
+                    document.getElementById("fraudAccount");
+
+                if (
+                    fraudAccountElement &&
+                    data.fraudAccount
+                ) {
+
+                    fraudAccountElement.value =
                         data.fraudAccount;
 
-                if (data.suspectName)
-                    document.getElementById("suspectName").value =
+                }
+
+
+                // Suspect name
+
+                const suspectNameElement =
+                    document.getElementById("suspectName");
+
+                if (
+                    suspectNameElement &&
+                    data.suspectName
+                ) {
+
+                    suspectNameElement.value =
                         data.suspectName;
 
-                if (data.suspectPhone)
-                    document.getElementById("suspectPhone").value =
+                }
+
+
+                // Suspect phone
+
+                const suspectPhoneElement =
+                    document.getElementById("suspectPhone");
+
+                if (
+                    suspectPhoneElement &&
+                    data.suspectPhone
+                ) {
+
+                    suspectPhoneElement.value =
                         data.suspectPhone;
 
-                if (data.suspectProfile)
-                    document.getElementById("suspectProfile").value =
+                }
+
+
+                // Suspect profile
+
+                const suspectProfileElement =
+                    document.getElementById("suspectProfile");
+
+                if (
+                    suspectProfileElement &&
+                    data.suspectProfile
+                ) {
+
+                    suspectProfileElement.value =
                         data.suspectProfile;
 
-                if (data.description)
-                    document.getElementById("description").value =
+                }
+
+
+                // Description
+
+                const descriptionElement =
+                    document.getElementById("description");
+
+                if (
+                    descriptionElement &&
+                    data.description
+                ) {
+
+                    descriptionElement.value =
                         data.description;
+
+                }
+
 
             } catch (error) {
 
@@ -240,12 +427,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (backButton) {
 
-            backButton.addEventListener("click", () => {
+            backButton.addEventListener(
+                "click",
+                () => {
 
-                window.location.href =
-                    "complaint.html";
+                    window.location.href =
+                        "complaint.html";
 
-            });
+                }
+            );
 
         }
 
@@ -256,139 +446,182 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (nextButton) {
 
-            nextButton.addEventListener("click", () => {
+            nextButton.addEventListener(
+                "click",
+                () => {
 
-                const crimeType =
-                    document.getElementById("crimeType").value;
+                    // -------------------------
+                    // REQUIRED FIELDS
+                    // -------------------------
 
-                const incidentDate =
-                    document.getElementById("incidentDate").value;
+                    const crimeType =
+                        document
+                            .getElementById("crimeType")
+                            .value;
 
-                const description =
-                    document
-                        .getElementById("description")
-                        .value
-                        .trim();
+                    const incidentDate =
+                        document
+                            .getElementById("incidentDate")
+                            .value;
+
+                    const description =
+                        document
+                            .getElementById("description")
+                            .value
+                            .trim();
 
 
-                // Required fields
+                    // -------------------------
+                    // VALIDATE CRIME TYPE
+                    // -------------------------
 
-                if (!crimeType) {
+                    if (!crimeType) {
 
-                    alert(
-                        "Please select the type of cybercrime."
+                        alert(
+                            "Please select the type of cybercrime."
+                        );
+
+                        document
+                            .getElementById("crimeType")
+                            .focus();
+
+                        return;
+                    }
+
+
+                    // -------------------------
+                    // VALIDATE INCIDENT DATE
+                    // -------------------------
+
+                    if (!incidentDate) {
+
+                        alert(
+                            "Please select the incident date."
+                        );
+
+                        document
+                            .getElementById("incidentDate")
+                            .focus();
+
+                        return;
+                    }
+
+
+                    // -------------------------
+                    // VALIDATE DESCRIPTION
+                    // -------------------------
+
+                    if (!description) {
+
+                        alert(
+                            "Please describe what happened."
+                        );
+
+                        document
+                            .getElementById("description")
+                            .focus();
+
+                        return;
+                    }
+
+
+                    // -----------------------------
+                    // SAVE INCIDENT DATA
+                    // -----------------------------
+
+                    const incidentData = {
+
+                        crimeType:
+                            crimeType,
+
+                        incidentDate:
+                            incidentDate,
+
+                        incidentTime:
+                            document
+                                .getElementById("incidentTime")
+                                .value,
+
+                        platform:
+                            document
+                                .getElementById("platform")
+                                .value,
+
+                        amount:
+                            document
+                                .getElementById("amount")
+                                .value,
+
+                        transactionId:
+                            document
+                                .getElementById("transactionId")
+                                .value,
+
+                        bank:
+                            document
+                                .getElementById("bank")
+                                .value,
+
+                        fraudAccount:
+                            document
+                                .getElementById("fraudAccount")
+                                .value,
+
+                        suspectName:
+                            document
+                                .getElementById("suspectName")
+                                .value,
+
+                        suspectPhone:
+                            document
+                                .getElementById("suspectPhone")
+                                .value,
+
+                        suspectProfile:
+                            document
+                                .getElementById("suspectProfile")
+                                .value,
+
+                        description:
+                            description
+
+                    };
+
+
+                    // -----------------------------
+                    // SAVE TO LOCAL STORAGE
+                    // -----------------------------
+
+                    localStorage.setItem(
+                        "cyberChatbotIncident",
+                        JSON.stringify(incidentData)
                     );
 
-                    return;
-                }
 
-
-                if (!incidentDate) {
-
-                    alert(
-                        "Please select the incident date."
+                    console.log(
+                        "Incident data saved:",
+                        incidentData
                     );
 
-                    return;
+
+                    // -----------------------------
+                    // GO TO PAGE 3
+                    // -----------------------------
+
+                    window.location.href =
+                        "evidence.html";
+
                 }
-
-
-                if (!description) {
-
-                    alert(
-                        "Please describe what happened."
-                    );
-
-                    return;
-                }
-
-
-                // -----------------------------
-                // SAVE INCIDENT DATA
-                // -----------------------------
-
-                const incidentData = {
-
-                    crimeType:
-                        crimeType,
-
-                    incidentDate:
-                        incidentDate,
-
-                    incidentTime:
-                        document
-                            .getElementById("incidentTime")
-                            .value,
-
-                    platform:
-                        document
-                            .getElementById("platform")
-                            .value,
-
-                    amount:
-                        document
-                            .getElementById("amount")
-                            .value,
-
-                    transactionId:
-                        document
-                            .getElementById("transactionId")
-                            .value,
-
-                    bank:
-                        document
-                            .getElementById("bank")
-                            .value,
-
-                    fraudAccount:
-                        document
-                            .getElementById("fraudAccount")
-                            .value,
-
-                    suspectName:
-                        document
-                            .getElementById("suspectName")
-                            .value,
-
-                    suspectPhone:
-                        document
-                            .getElementById("suspectPhone")
-                            .value,
-
-                    suspectProfile:
-                        document
-                            .getElementById("suspectProfile")
-                            .value,
-
-                    description:
-                        description
-
-                };
-
-
-                localStorage.setItem(
-                    "cyberSahayakIncident",
-                    JSON.stringify(incidentData)
-                );
-
-
-                // -----------------------------
-                // GO TO PAGE 3
-                // -----------------------------
-
-                window.location.href =
-                    "evidence.html";
-
-            });
+            );
 
         }
 
     }
 
 
-    // --------------------------------------------------
+    // ==================================================
     // PAGE 3 - EVIDENCE & SUBMIT
-    // --------------------------------------------------
+    // ==================================================
 
     const evidencePage =
         document.getElementById("evidence-page");
@@ -397,7 +630,245 @@ document.addEventListener("DOMContentLoaded", () => {
     if (evidencePage) {
 
         console.log(
-            "Cyber Sahayak Evidence Page Loaded"
+            "Cyber Chatbot Evidence Page Loaded"
+        );
+
+
+        // -----------------------------
+        // LOAD COMPLAINANT DATA
+        // -----------------------------
+
+        const savedComplainant =
+            localStorage.getItem(
+                "cyberChatbotComplainant"
+            );
+
+
+        if (savedComplainant) {
+
+            try {
+
+                const complainantData =
+                    JSON.parse(savedComplainant);
+
+                console.log(
+                    "Complainant data available:",
+                    complainantData
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Could not read complainant data:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // -----------------------------
+        // LOAD INCIDENT DATA
+        // -----------------------------
+
+        const savedIncident =
+            localStorage.getItem(
+                "cyberChatbotIncident"
+            );
+
+
+        if (savedIncident) {
+
+            try {
+
+                const incidentData =
+                    JSON.parse(savedIncident);
+
+                console.log(
+                    "Incident data available:",
+                    incidentData
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Could not read incident data:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+
+    // ==================================================
+    // ACCESSIBILITY - FONT SIZE CONTROLS
+    // ==================================================
+
+    const decreaseFont =
+        document.querySelector(
+            "[data-font-decrease]"
+        );
+
+    const resetFont =
+        document.querySelector(
+            "[data-font-reset]"
+        );
+
+    const increaseFont =
+        document.querySelector(
+            "[data-font-increase]"
+        );
+
+
+    let currentFontSize =
+        parseInt(
+            localStorage.getItem(
+                "cyberChatbotFontSize"
+            )
+        ) || 100;
+
+
+    function applyFontSize() {
+
+        document.documentElement.style.fontSize =
+            currentFontSize + "%";
+
+        localStorage.setItem(
+            "cyberChatbotFontSize",
+            currentFontSize
+        );
+
+    }
+
+
+    if (decreaseFont) {
+
+        decreaseFont.addEventListener(
+            "click",
+            () => {
+
+                if (currentFontSize > 80) {
+
+                    currentFontSize -= 10;
+
+                    applyFontSize();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (resetFont) {
+
+        resetFont.addEventListener(
+            "click",
+            () => {
+
+                currentFontSize = 100;
+
+                applyFontSize();
+
+            }
+        );
+
+    }
+
+
+    if (increaseFont) {
+
+        increaseFont.addEventListener(
+            "click",
+            () => {
+
+                if (currentFontSize < 130) {
+
+                    currentFontSize += 10;
+
+                    applyFontSize();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // Apply saved font size
+
+    applyFontSize();
+
+
+    // ==================================================
+    // MOBILE NAVIGATION
+    // ==================================================
+
+    const menuToggle =
+        document.querySelector(".menu-toggle");
+
+    const navLinks =
+        document.querySelector(".nav-links");
+
+
+    if (menuToggle && navLinks) {
+
+        menuToggle.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    navLinks.classList.toggle(
+                        "open"
+                    );
+
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    isOpen
+                );
+
+            }
+        );
+
+    }
+
+
+    // ==================================================
+    // NAVIGATION DROPDOWN
+    // ==================================================
+
+    const dropdownButton =
+        document.querySelector(".nav-top");
+
+    const dropdown =
+        document.querySelector(".dropdown");
+
+
+    if (dropdownButton && dropdown) {
+
+        dropdownButton.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    dropdown.classList.toggle(
+                        "open"
+                    );
+
+
+                dropdownButton.setAttribute(
+                    "aria-expanded",
+                    isOpen
+                );
+
+            }
         );
 
     }

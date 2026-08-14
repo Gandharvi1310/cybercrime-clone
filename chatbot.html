@@ -1,0 +1,1285 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Complaint Through Chat | Cybercrime Reporting</title>
+
+    <meta name="description"
+        content="AI-assisted cybercrime complaint preparation through chat and voice.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .chat-page {
+            background: #f3f6fa;
+            min-height: calc(100vh - 170px);
+            padding: 35px 0 60px;
+        }
+
+        .chat-container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .chat-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .chat-title h1 {
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .chat-title p {
+            color: var(--muted);
+        }
+
+        .chat-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        .info-panel,
+        .chat-card {
+            background: #fff;
+            border: 1px solid #dce3eb;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(15, 42, 70, .08);
+        }
+
+        .info-panel {
+            padding: 24px;
+        }
+
+        .assistant-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: #0b2d50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .info-panel h2 {
+            color: var(--navy);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .status {
+            display: inline-block;
+            background: #e8f7ed;
+            color: #21733d;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .info-panel ul {
+            padding-left: 20px;
+            color: #475569;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .privacy {
+            margin-top: 20px;
+            padding: 13px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #9a3412;
+        }
+
+        .chat-card {
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #0b2d50;
+            color: white;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header strong {
+            font-size: 16px;
+        }
+
+        .live {
+            font-size: 11px;
+            background: #168a52;
+            padding: 5px 9px;
+            border-radius: 12px;
+        }
+
+        .progress-wrap {
+            padding: 14px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 7px;
+        }
+
+        .progress-bar {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 5%;
+            background: #d94b32;
+            transition: width .3s;
+        }
+
+        .chat-body {
+            height: 450px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message.ai {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 78%;
+            padding: 12px 15px;
+            border-radius: 13px;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .ai .bubble {
+            background: white;
+            border: 1px solid #dce3eb;
+            color: #243447;
+        }
+
+        .user .bubble {
+            background: #0b2d50;
+            color: white;
+        }
+
+        .typing {
+            display: none;
+            padding: 0 20px 8px;
+            font-size: 12px;
+            color: #64748b;
+            background: white;
+        }
+
+        .input-area {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .input-row textarea {
+            flex: 1;
+            min-height: 48px;
+            max-height: 120px;
+            resize: none;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            padding: 12px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .input-row textarea:focus {
+            border-color: #0b2d50;
+        }
+
+        .voice-btn,
+        .send-btn {
+            min-width: 50px;
+        }
+
+        .send-btn {
+            min-width: 80px;
+        }
+
+        .voice-btn.recording {
+            background: #d94b32;
+            color: white;
+        }
+
+        .status-text {
+            margin-top: 9px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .extracted-box {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #166534;
+        }
+
+        .review-btn {
+            margin-top: 12px;
+        }
+
+        @media(max-width:800px) {
+
+            .chat-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .info-panel {
+                display: none;
+            }
+
+            .chat-body {
+                height: 430px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="container">
+
+            <span class="emergency">
+                🚨 Financial cyber fraud? Call <b>1930</b> immediately
+            </span>
+
+            <div class="a11y-controls">
+
+                <span>Text size:</span>
+
+                <button data-font-decrease>A-</button>
+                <button data-font-reset>A</button>
+                <button data-font-increase>A+</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <header class="portal-header">
+
+        <div class="container">
+
+            <div class="brand">
+
+                <div class="emblem">
+                    🛡
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="site-title">
+                        Cybercrime Reporting Assistant
+                    </div>
+
+                    <div class="site-sub">
+                        AI-Assisted Complaint Preparation
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="header-actions">
+
+                <a href="index.html"
+                   class="btn btn-outline btn-sm">
+                    Home
+                </a>
+
+                <a href="complaint.html"
+                   class="btn btn-red btn-sm">
+                    Manual Form
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+
+        <div class="container nav-inner">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li class="active">
+                    <a href="sahayak.html">Complaint Through Chat</a>
+                </li>
+
+                <li>
+                    <a href="track.html">Track Complaint</a>
+                </li>
+
+                <li>
+                    <a href="suspect.html">Check Suspect</a>
+                </li>
+
+                <li>
+                    <a href="safety.html">Cyber Safety</a>
+                </li>
+
+                <li>
+                    <a href="faq.html">FAQ</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="chat-page">
+
+        <div class="container chat-container">
+
+            <div class="chat-title">
+
+                <h1>Complaint Through Chat</h1>
+
+                <p>
+                    Tell us what happened in your own words.
+                    You can type or speak.
+                </p>
+
+            </div>
+
+
+            <div class="chat-layout">
+
+
+                <!-- INFORMATION PANEL -->
+
+                <aside class="info-panel">
+
+                    <div class="assistant-icon">
+                        💬
+                    </div>
+
+                    <h2>Complaint Assistant</h2>
+
+                    <span class="status">
+                        ● Ready to assist
+                    </span>
+
+                    <p>
+                        You don't need to fill a long form.
+                        Just explain what happened and I will help
+                        organize the information.
+                    </p>
+
+                    <br>
+
+                    <ul>
+
+                        <li>Chat naturally</li>
+
+                        <li>Speak using microphone</li>
+
+                        <li>Hindi / English / Hinglish / Marathi</li>
+
+                        <li>Information extraction</li>
+
+                        <li>Field validation</li>
+
+                        <li>Automatic saving</li>
+
+                        <li>Review before submission</li>
+
+                    </ul>
+
+
+                    <div class="privacy">
+
+                        <strong>Privacy reminder</strong>
+
+                        <br><br>
+
+                        Never share OTP, PIN, CVV,
+                        passwords or banking credentials.
+
+                    </div>
+
+                </aside>
+
+
+                <!-- CHAT -->
+
+                <section class="chat-card">
+
+
+                    <div class="chat-header">
+
+                        <strong>
+                            Complaint Assistant
+                        </strong>
+
+                        <span class="live">
+                            ● ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <!-- PROGRESS -->
+
+                    <div class="progress-wrap">
+
+                        <div class="progress-text">
+
+                            Complaint information:
+                            <span id="progressText">
+                                Starting
+                            </span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                id="progressFill">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CHAT -->
+
+                    <div
+                        class="chat-body"
+                        id="chatBody">
+                    </div>
+
+
+                    <!-- TYPING -->
+
+                    <div
+                        class="typing"
+                        id="typing">
+                        Assistant is thinking...
+                    </div>
+
+
+                    <!-- INPUT -->
+
+                    <div class="input-area">
+
+                        <div class="input-row">
+
+                            <button
+                                class="btn btn-outline voice-btn"
+                                id="voiceBtn"
+                                title="Speak">
+
+                                🎙
+
+                            </button>
+
+
+                            <textarea
+                                id="userInput"
+                                placeholder="Type your story here... You can use Hindi, English, Hinglish or Marathi."
+                                aria-label="Your message">
+                            </textarea>
+
+
+                            <button
+                                class="btn btn-red send-btn"
+                                id="sendBtn">
+
+                                Send
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="status-text"
+                            id="statusText">
+
+                            You can type or press 🎙 to speak.
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-bottom">
+
+                Complaint Through Chat Demo —
+                Not an official Government of India website.
+                No real complaint is submitted.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/script.js"></script>
+
+    <script>
+
+        /* =========================================
+           COMPLAINT STATE
+        ========================================= */
+
+        let complaintData = {
+
+            story: "",
+
+            incidentType: "",
+            platform: "",
+            incidentDate: "",
+            incidentTime: "",
+
+            amount: "",
+            transactionId: "",
+            paymentMethod: "",
+            bank: "",
+
+            suspectName: "",
+            suspectPhone: "",
+            suspectProfile: "",
+
+            name: "",
+            mobile: "",
+            email: "",
+            state: "",
+            district: "",
+
+            description: "",
+
+            evidence: []
+
+        };
+
+
+        /* =========================================
+           LOAD PREVIOUS DATA
+        ========================================= */
+
+        const saved =
+            localStorage.getItem(
+                "cyberSahayakComplaint"
+            );
+
+        if (saved) {
+
+            try {
+
+                complaintData =
+                    {
+                        ...complaintData,
+                        ...JSON.parse(saved)
+                    };
+
+            } catch (error) {
+
+                console.log(
+                    "Previous complaint data could not be loaded."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           ELEMENTS
+        ========================================= */
+
+        const chatBody =
+            document.getElementById("chatBody");
+
+        const userInput =
+            document.getElementById("userInput");
+
+        const sendBtn =
+            document.getElementById("sendBtn");
+
+        const voiceBtn =
+            document.getElementById("voiceBtn");
+
+        const typing =
+            document.getElementById("typing");
+
+        const statusText =
+            document.getElementById("statusText");
+
+        const progressText =
+            document.getElementById("progressText");
+
+        const progressFill =
+            document.getElementById("progressFill");
+
+
+        /* =========================================
+           MESSAGE FUNCTION
+        ========================================= */
+
+        function addMessage(text, sender) {
+
+            const message =
+                document.createElement("div");
+
+            message.className =
+                "message " + sender;
+
+            const bubble =
+                document.createElement("div");
+
+            bubble.className = "bubble";
+
+            bubble.textContent = text;
+
+            message.appendChild(bubble);
+
+            chatBody.appendChild(message);
+
+            chatBody.scrollTop =
+                chatBody.scrollHeight;
+
+        }
+
+
+        /* =========================================
+           SAVE
+        ========================================= */
+
+        function saveComplaint() {
+
+            localStorage.setItem(
+                "cyberSahayakComplaint",
+                JSON.stringify(complaintData)
+            );
+
+        }
+
+
+        /* =========================================
+           FIELD EXTRACTION
+        ========================================= */
+
+        function extractInformation(text) {
+
+            const lower =
+                text.toLowerCase();
+
+
+            /* AMOUNT */
+
+            const amountMatch =
+                text.match(
+                    /(?:₹|rs\.?|inr)?\s?(\d+(?:,\d{3})*(?:\.\d+)?)/i
+                );
+
+            if (
+                amountMatch &&
+                (
+                    lower.includes("fraud") ||
+                    lower.includes("lost") ||
+                    lower.includes("lose") ||
+                    lower.includes("payment") ||
+                    lower.includes("rupee") ||
+                    lower.includes("rs") ||
+                    text.includes("₹")
+                )
+            ) {
+
+                complaintData.amount =
+                    amountMatch[1].replace(/,/g, "");
+
+            }
+
+
+            /* UPI */
+
+            if (
+                lower.includes("upi")
+            ) {
+
+                complaintData.paymentMethod =
+                    "UPI";
+
+            }
+
+
+            /* WHATSAPP */
+
+            if (
+                lower.includes("whatsapp")
+            ) {
+
+                complaintData.platform =
+                    "WhatsApp";
+
+            }
+
+
+            /* INSTAGRAM */
+
+            if (
+                lower.includes("instagram")
+            ) {
+
+                complaintData.platform =
+                    "Instagram";
+
+            }
+
+
+            /* FACEBOOK */
+
+            if (
+                lower.includes("facebook")
+            ) {
+
+                complaintData.platform =
+                    "Facebook";
+
+            }
+
+
+            /* TELEGRAM */
+
+            if (
+                lower.includes("telegram")
+            ) {
+
+                complaintData.platform =
+                    "Telegram";
+
+            }
+
+
+            /* PHONE */
+
+            if (
+                lower.includes("phone call") ||
+                lower.includes("called me") ||
+                lower.includes("call")
+            ) {
+
+                complaintData.platform =
+                    complaintData.platform ||
+                    "Phone Call";
+
+            }
+
+
+            /* BANKING */
+
+            if (
+                lower.includes("bank transfer") ||
+                lower.includes("banking")
+            ) {
+
+                complaintData.paymentMethod =
+                    "Bank Transfer";
+
+            }
+
+
+            /* CARD */
+
+            if (
+                lower.includes("credit card") ||
+                lower.includes("debit card") ||
+                lower.includes("card")
+            ) {
+
+                complaintData.paymentMethod =
+                    "Card";
+
+            }
+
+
+            /* INCIDENT TYPE */
+
+            if (
+                lower.includes("upi fraud") ||
+                lower.includes("upi scam")
+            ) {
+
+                complaintData.incidentType =
+                    "UPI Fraud";
+
+            }
+
+            else if (
+                lower.includes("investment") ||
+                lower.includes("trading")
+            ) {
+
+                complaintData.incidentType =
+                    "Investment / Trading Fraud";
+
+            }
+
+            else if (
+                lower.includes("shopping") ||
+                lower.includes("order")
+            ) {
+
+                complaintData.incidentType =
+                    "Online Shopping Fraud";
+
+            }
+
+            else if (
+                lower.includes("instagram") ||
+                lower.includes("facebook") ||
+                lower.includes("whatsapp") ||
+                lower.includes("social media")
+            ) {
+
+                complaintData.incidentType =
+                    "Social Media Fraud";
+
+            }
+
+            else if (
+                lower.includes("otp") &&
+                (
+                    lower.includes("fraud") ||
+                    lower.includes("scam")
+                )
+            ) {
+
+                complaintData.incidentType =
+                    "Online Financial Fraud";
+
+            }
+
+            else if (
+                lower.includes("fraud") ||
+                lower.includes("scam") ||
+                lower.includes("cheated") ||
+                lower.includes("money")
+            ) {
+
+                complaintData.incidentType =
+                    "Online Financial Fraud";
+
+            }
+
+
+            /* TRANSACTION ID / UTR */
+
+            const transactionMatch =
+                text.match(
+                    /(?:utr|transaction\s*(?:id|number)?|txn\s*(?:id|number)?)\s*[:#-]?\s*([A-Za-z0-9]{6,})/i
+                );
+
+            if (transactionMatch) {
+
+                complaintData.transactionId =
+                    transactionMatch[1];
+
+            }
+
+
+            complaintData.description =
+                complaintData.description
+                ? complaintData.description + " " + text
+                : text;
+
+            complaintData.story =
+                complaintData.story
+                ? complaintData.story
+                : text;
+
+            saveComplaint();
+
+        }
+
+
+        /* =========================================
+           GET MISSING INFORMATION
+        ========================================= */
+
+        function getNextQuestion() {
+
+            if (!complaintData.incidentType) {
+
+                return "I understand. Could you tell me what type of incident this was? For example, UPI fraud, online shopping fraud, investment scam, social media fraud, or another cybercrime.";
+
+            }
+
+
+            if (!complaintData.incidentDate) {
+
+                return "When did this incident happen? You can give an exact date or an approximate date.";
+
+            }
+
+
+            if (
+                complaintData.incidentType.includes("Fraud") &&
+                !complaintData.amount
+            ) {
+
+                return "Approximately how much money was lost? If no money was lost, you can say 'no financial loss'.";
+
+            }
+
+
+            if (
+                complaintData.amount &&
+                !complaintData.paymentMethod
+            ) {
+
+                return "How was the payment made — UPI, bank transfer, card, wallet, or something else?";
+
+            }
+
+
+            if (
+                complaintData.amount &&
+                !complaintData.transactionId
+            ) {
+
+                return "Do you have the transaction ID or UTR number? If you don't have it, just say 'I don't know'.";
+
+            }
+
+
+            if (!complaintData.platform) {
+
+                return "How did the person contact you — WhatsApp, phone call, Instagram, email, a website, or another platform?";
+
+            }
+
+
+            return "Is there any other important detail about what happened that you would like to add?";
+
+        }
+
+
+        /* =========================================
+           PROGRESS
+        ========================================= */
+
+        function updateProgress() {
+
+            const fields = [
+
+                complaintData.incidentType,
+                complaintData.incidentDate,
+                complaintData.amount,
+                complaintData.paymentMethod,
+                complaintData.transactionId,
+                complaintData.platform
+
+            ];
+
+            const completed =
+                fields.filter(Boolean).length;
+
+            const percentage =
+                Math.round(
+                    (completed / fields.length) * 100
+                );
+
+            progressFill.style.width =
+                Math.max(5, percentage) + "%";
+
+            progressText.textContent =
+                percentage + "% information collected";
+
+        }
+
+
+        /* =========================================
+           PROCESS MESSAGE
+        ========================================= */
+
+        function processMessage(text) {
+
+            if (!text.trim()) {
+                return;
+            }
+
+            addMessage(text, "user");
+
+            extractInformation(text);
+
+            updateProgress();
+
+            typing.style.display = "block";
+
+            setTimeout(() => {
+
+                typing.style.display = "none";
+
+                const question =
+                    getNextQuestion();
+
+                addMessage(
+                    question,
+                    "ai"
+                );
+
+                statusText.textContent =
+                    "Information is being collected and saved.";
+
+            }, 500);
+
+        }
+
+
+        /* =========================================
+           SEND
+        ========================================= */
+
+        sendBtn.addEventListener(
+            "click",
+            () => {
+
+                const text =
+                    userInput.value.trim();
+
+                if (!text) {
+                    return;
+                }
+
+                userInput.value = "";
+
+                processMessage(text);
+
+            }
+        );
+
+
+        /* =========================================
+           ENTER TO SEND
+        ========================================= */
+
+        userInput.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    sendBtn.click();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           VOICE RECOGNITION
+        ========================================= */
+
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+        let recognition = null;
+
+        let isRecording = false;
+
+
+        if (SpeechRecognition) {
+
+            recognition =
+                new SpeechRecognition();
+
+            recognition.continuous = false;
+
+            recognition.interimResults = false;
+
+            recognition.lang = "en-IN";
+
+
+            recognition.onstart = () => {
+
+                isRecording = true;
+
+                voiceBtn.classList.add(
+                    "recording"
+                );
+
+                statusText.textContent =
+                    "Listening... Speak now.";
+
+            };
+
+
+            recognition.onresult =
+                (event) => {
+
+                    const transcript =
+                        event.results[0][0].transcript;
+
+                    userInput.value =
+                        transcript;
+
+                    statusText.textContent =
+                        "Voice captured. Press Send.";
+
+                };
+
+
+            recognition.onerror =
+                () => {
+
+                    statusText.textContent =
+                        "Voice recognition failed. You can type your message instead.";
+
+                };
+
+
+            recognition.onend = () => {
+
+                isRecording = false;
+
+                voiceBtn.classList.remove(
+                    "recording"
+                );
+
+            };
+
+
+            voiceBtn.addEventListener(
+                "click",
+                () => {
+
+                    if (isRecording) {
+
+                        recognition.stop();
+
+                    } else {
+
+                        recognition.start();
+
+                    }
+
+                }
+            );
+
+        }
+
+        else {
+
+            voiceBtn.disabled = true;
+
+            statusText.textContent =
+                "Voice recognition is not supported in this browser. Use Chrome or Edge.";
+
+        }
+
+
+        /* =========================================
+           INITIAL MESSAGE
+        ========================================= */
+
+        addMessage(
+            "Hello. I'm here to help you prepare your cybercrime complaint. You don't need to fill a long form. Just tell me what happened in your own words — you can type or speak.",
+            "ai"
+        );
+
+
+        setTimeout(() => {
+
+            addMessage(
+                "For example: \"Mere WhatsApp pe KYC ka message aaya tha aur mere account se ₹20,000 chale gaye.\"",
+                "ai"
+            );
+
+        }, 700);
+
+
+        updateProgress();
+
+    </script>
+
+</body>
+
+</html>
