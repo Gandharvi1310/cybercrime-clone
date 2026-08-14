@@ -383,3 +383,6 @@ body.font-xl { font-size: 19px; }
   display: block;
   min-height: 18px;
 }
+.form-step.hidden {
+  display: none;
+}
